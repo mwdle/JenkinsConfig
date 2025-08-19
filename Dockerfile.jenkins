@@ -1,0 +1,14 @@
+FROM jenkins/jenkins:lts
+
+RUN jenkins-plugin-cli --plugins \
+    configuration-as-code:1985.vdda_32d0c4ea_b_ \
+    job-dsl:1.93 \
+    git:5.7.0 \
+    gitea:250.v76a_0b_d4fef5b_ \
+    docker-plugin:1274.vc0203fdf2e74 \
+    pipeline-model-definition:2.2265.v140e610fe9d5 \
+    pipeline-stage-view:2.38 \
+    junit:1335.v6b_a_a_e18534e1 \
+    dark-theme:574.va_19f05d54df5 \
+    ws-cleanup:0.49 \
+    mailer:515.vd788654779b_1

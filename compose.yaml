@@ -1,0 +1,116 @@
+services:
+  Jenkins:
+    container_name: Jenkins
+    image: jenkins:lts
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile.jenkins # ./Dockerfile.jenkins installs plugins on top of jenkins:lts image
+    networks:
+      - Jenkins
+      - DockerProxy
+    environment:
+      - CASC_JENKINS_CONFIG=/var/jenkins_home/JCasC
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false # Skip setup wizard, JCasC (jenkins.yaml) handles it
+      - JENKINS_URL=${JENKINS_URL}
+      - SMTP_HOST=${SMTP_HOST}
+      - SMTP_PORT=465 # If changing the SMTP port, you must also change `useSsl: true` within JCasC (jenkins.yaml)
+      - SMTP_USERNAME=${SMTP_USERNAME}
+      - SMTP_PASSWORD=${SMTP_PASSWORD}
+      - REPLY_TO_EMAIL=${REPLY_TO_EMAIL}
+      - ADMIN_ADDRESS=${ADMIN_ADDRESS}
+      - systemMessage=${systemMessage}
+      - JENKINS_ADMIN_USER=${JENKINS_ADMIN_USER}
+      - JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}
+      - GIT_USERNAME=${GIT_USERNAME}
+      - GIT_TOKEN=${GIT_TOKEN}
+      - ORGFOLDER_NAME=${ORGFOLDER_NAME}
+      - ORGFOLDER_DISPLAY_NAME=${ORGFOLDER_DISPLAY_NAME}
+      - ORGFOLDER_DESCRIPTION=${ORGFOLDER_DESCRIPTION}
+      - GIT_SERVER_URL=${GIT_SERVER_URL}
+    depends_on:
+      DockerProxy:
+        condition: service_healthy
+      AgentImageBuilder: # Agent image should be built to host Docker cache before using Jenkins (not strictly necessary, can be safely removed if you are willing to accept that you won't be notified of failure to build until Jenkins runs a job with this agent template and fails to find the image)
+        condition: service_completed_successfully
+    volumes:
+      - ${DOCKER_VOLUMES}/Jenkins:/var/jenkins_home
+      - ./JCasC:/var/jenkins_home/JCasC
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
+        limits:
+          cpus: "1"
+          memory: 1GB
+
+  DockerProxy: # This container name is referenced within JCasC (jenkins.yaml) under clouds.docker.dockerApi.dockerHost.uri
+    container_name: DockerProxy
+    image: tecnativa/docker-socket-proxy:latest
+    restart: unless-stopped
+    networks:
+      - DockerProxy
+    environment:
+      - EVENTS=1
+      - PING=1
+      - VERSION=1
+      - AUTH=0
+      - SECRETS=0
+      - POST=1
+      - BUILD=1
+      - COMMIT=0
+      - CONFIGS=0
+      - CONTAINERS=1
+      - DISTRIBUTION=1
+      - EXEC=1
+      - GRPC=1
+      - IMAGES=1
+      - INFO=1
+      - NETWORKS=1
+      - NODES=0
+      - PLUGINS=0
+      - SERVICES=0
+      - SESSION=0
+      - SWARM=0
+      - SYSTEM=1
+      - TASKS=0
+      - VOLUMES=1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:Z # `:Z` allows the Docker Socket Proxy to privately access to the host's docker socket on SELinux enabled systems without using `privileged: true`. If SELinux is not enabled, `:Z` will be ignored.
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:2375/version",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    deploy:
+      resources:
+        limits:
+          cpus: "0.1"
+          memory: 128M
+
+  AgentImageBuilder: # Dummy container to enforce that the `Dockerfile.agent` is built to the host Docker cache for Jenkins to utilize in ephemeral agent templates via Docker Plugin
+    container_name: AgentImageBuilder
+    # This image tag is defined here, built using the provided `Dockerfile.agent` and is referenced within JCasC (jenkins.yaml) at clouds.docker.templates.dockerTemplateBase.image
+    # If someone prunes images on the host and this image is deleted from the host Docker cache, builds will delay and eventually fail. To fix this, simply run `docker compose up -d --rebuild`
+    image: jenkins-agent:local
+    build:
+      context: .
+      dockerfile: ./Dockerfile.agent
+    restart: "no"
+    command: echo "Successfully built Jenkins Agent Image to host Docker cache. Exiting..."
+
+networks:
+  Jenkins:
+    name: Jenkins
+    external: true
+  DockerProxy:
+    name: DockerProxy
+    external: true

@@ -1,0 +1,87 @@
+jenkins:
+  systemMessage: "${systemMessage}"
+  noUsageStatistics: true
+  slaveAgentPort: -1 # Docker Plugin attaches directly to dynamic agent containers, thus agent port is not needed.
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "${JENKINS_ADMIN_USER}"
+          password: "${JENKINS_ADMIN_PASSWORD}"
+          properties:
+            - theme:
+                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile`
+
+  authorizationStrategy: # IMPORTANT: This configuration assumes a single user instance. If this instance will have more than one user or the users are not fully trusted, this authorization strategy MUST BE REPLACED with something more secure.
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  disableRememberMe: true # Disable "Keep me signed in”
+
+  crumbIssuer: "standard"
+  mode: NORMAL
+  numExecutors: 0 # No executors on built-in node
+
+  clouds:
+    - docker:
+        name: "docker"
+        containerCap: 100 # Default is 100, adjust as needed
+        dockerApi:
+          dockerHost:
+            uri: "tcp://DockerProxy:2375" # docker-socket-proxy container name defined in compose.yaml
+          connectTimeout: 30
+        exposeDockerHost: true
+        templates:
+          - connector:
+              attach:
+                user: "jenkins"
+            dockerTemplateBase:
+              image: jenkins-agent:local # Custom container image defined in compose.yaml and built to host's Docker cache
+            labelString: "docker"
+            mode: EXCLUSIVE
+            name: "docker"
+            remoteFs: "/home/jenkins/agent"
+
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - usernamePassword:
+              scope: GLOBAL
+              id: "git-creds"
+              username: "${GIT_USERNAME}"
+              password: "${GIT_TOKEN}"
+              description: "Gitea credentials for organization folder"
+
+unclassified:
+  location:
+    url: "${JENKINS_URL}"
+    adminAddress: "${ADMIN_ADDRESS}"
+
+  giteaServers:
+    servers:
+      - credentialsId: git-creds
+        displayName: scm
+        manageHooks: true
+        serverUrl: ${GIT_SERVER_URL}
+
+  mailer:
+    replyToAddress: ${REPLY_TO_EMAIL}
+    smtpHost: ${SMTP_HOST}
+    smtpPort: 465
+    useSsl: true
+    authentication:
+      username: ${SMTP_USERNAME}
+      password: ${SMTP_PASSWORD}
+
+  buildDiscarders:
+    configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+      - simpleBuildDiscarder:
+          discarder:
+            logRotator:
+              numToKeepStr: "1000000"
+              daysToKeepStr: "730"
+
+jobs:
+  - file: /var/jenkins_home/JCasC/orgfolder.groovy
