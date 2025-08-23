@@ -40,7 +40,7 @@ jenkins:
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
-            remoteFs: "/home/jenkins/agent"
+            remoteFs: "/home/jenkins"
 
 credentials:
   system:
