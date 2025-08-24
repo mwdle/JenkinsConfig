@@ -28,6 +28,7 @@ services:
       - ORGFOLDER_DISPLAY_NAME=${ORGFOLDER_DISPLAY_NAME}
       - ORGFOLDER_DESCRIPTION=${ORGFOLDER_DESCRIPTION}
       - GIT_SERVER_URL=${GIT_SERVER_URL}
+      - DOCKER_HOST=tcp://DockerProxy:2375
     depends_on:
       DockerProxy:
         condition: service_healthy
@@ -99,12 +100,13 @@ services:
   AgentImageBuilder: # Dummy container to enforce that the `Dockerfile.agent` is built to the host Docker cache for Jenkins to utilize in ephemeral agent templates via Docker Plugin
     container_name: AgentImageBuilder
     # This image tag is defined here, built using the provided `Dockerfile.agent` and is referenced within JCasC (jenkins.yaml) at clouds.docker.templates.dockerTemplateBase.image
-    # If someone prunes images on the host and this image is deleted from the host Docker cache, builds will delay and eventually fail. To fix this, simply run `docker compose up -d --rebuild`
+    # If someone prunes images on the host and this image is deleted from the host Docker cache, builds will delay and eventually fail. To fix this, simply run `docker compose up -d --build`
     image: jenkins-agent:local
     build:
       context: .
       dockerfile: ./Dockerfile.agent
     restart: "no"
+    network_mode: "none"
     command: echo "Successfully built Jenkins Agent Image to host Docker cache. Exiting..."
 
 networks:

@@ -16,7 +16,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             traits {
                 giteaExcludeArchivedRepositories {}
                 giteaBranchDiscovery {
-                    strategyId(1) // Exclude branches that are also filed as PRs
+                    strategyId(3) // Discover all branches
                 }
                 giteaWebhookRegistration {
                     mode('ITEM')

@@ -28,15 +28,17 @@ jenkins:
         containerCap: 100 # Default is 100, adjust as needed
         dockerApi:
           dockerHost:
-            uri: "tcp://DockerProxy:2375" # docker-socket-proxy container name defined in compose.yaml
+            uri: "${DOCKER_HOST}" # docker-socket-proxy container name defined in compose.yaml
           connectTimeout: 30
-        exposeDockerHost: true
         templates:
           - connector:
               attach:
                 user: "jenkins"
             dockerTemplateBase:
-              image: jenkins-agent:local # Custom container image defined in compose.yaml and built to host's Docker cache
+              image: jenkins-agent:local # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
+              network: "DockerProxy" # DockerProxy network for docker-socket proxy container -- See compose.yaml
+              environment:
+                - "DOCKER_HOST=${DOCKER_HOST}"
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
