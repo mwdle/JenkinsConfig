@@ -7,11 +7,11 @@ jenkins:
       allowsSignup: false
       enableCaptcha: false
       users:
-        - id: "${JENKINS_ADMIN_USER}"
-          password: "${JENKINS_ADMIN_PASSWORD}"
+        - id: "${JENKINS_ADMIN_USER}" # See compose.yaml
+          password: "${JENKINS_ADMIN_PASSWORD}" # See compose.yaml
           properties:
             - theme:
-                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile`
+                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile.jenkins`
 
   authorizationStrategy: # IMPORTANT: This configuration assumes a single user instance. If this instance will have more than one user or the users are not fully trusted, this authorization strategy MUST BE REPLACED with something more secure.
     loggedInUsersCanDoAnything:
@@ -33,13 +33,13 @@ jenkins:
         templates:
           - connector:
               attach:
-                user: "jenkins"
+                user: "jenkins" # Custom user defined in `Dockerfile.agent`
             dockerTemplateBase:
               image: jenkins-agent:local # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
               network: "DockerProxy" # DockerProxy network for docker-socket proxy container -- See compose.yaml
               environment:
-                - "DOCKER_HOST=${DOCKER_HOST}"
-                - "BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}"
+                - "DOCKER_HOST=${DOCKER_HOST}" # See compose.yaml
+                - "BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}" # See compose.yaml
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
@@ -52,41 +52,41 @@ credentials:
           - usernamePassword:
               scope: GLOBAL
               id: "git-creds"
-              username: "${GIT_USERNAME}"
-              password: "${GIT_TOKEN}"
+              username: "${GIT_USERNAME}" # See compose.yaml
+              password: "${GIT_TOKEN}" # See compose.yaml
               description: "Gitea credentials for organization folder"
           - usernamePassword:
               scope: GLOBAL
               id: "bitwarden"
-              username: "${BITWARDEN_CLIENTID}"
-              password: "${BITWARDEN_CLIENTSECRET}"
+              username: "${BITWARDEN_CLIENTID}" # See compose.yaml
+              password: "${BITWARDEN_CLIENTSECRET}" # See compose.yaml
               description: "Bitwarden CLI API Credentials"
           - string:
               scope: GLOBAL
               id: "bitwardenPassword"
-              secret: "${BITWARDEN_MASTER_PASSWORD}"
+              secret: "${BITWARDEN_MASTER_PASSWORD}" # See compose.yaml
               description: "Bitwarden CLI Master Password"
 
 unclassified:
   location:
     url: "${JENKINS_URL}"
-    adminAddress: "${ADMIN_ADDRESS}"
+    adminAddress: "${ADMIN_ADDRESS}" # See compose.yaml
 
   giteaServers:
     servers:
       - credentialsId: git-creds
         displayName: scm
         manageHooks: true
-        serverUrl: ${GIT_SERVER_URL}
+        serverUrl: ${GIT_SERVER_URL} # See compose.yaml
 
   mailer:
-    replyToAddress: ${REPLY_TO_EMAIL}
-    smtpHost: ${SMTP_HOST}
-    smtpPort: 465
+    replyToAddress: ${REPLY_TO_EMAIL} # See compose.yaml
+    smtpHost: ${SMTP_HOST} # See compose.yaml
+    smtpPort: ${SMTP_PORT} # See compose.yaml
     useSsl: true
     authentication:
-      username: ${SMTP_USERNAME}
-      password: ${SMTP_PASSWORD}
+      username: ${SMTP_USERNAME} # See compose.yaml
+      password: ${SMTP_PASSWORD} # See compose.yaml
 
   buildDiscarders:
     configuredBuildDiscarders:
