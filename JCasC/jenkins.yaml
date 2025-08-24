@@ -40,6 +40,11 @@ jenkins:
               environment:
                 - "DOCKER_HOST=${DOCKER_HOST}" # See compose.yaml
                 - "BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}" # See compose.yaml
+              # Persisting the workspace on the host machine allows you to create Docker bind mounts from the repository itself into any containers you may create.
+              # For example this could mean mounting a configuration file directly from your SCM repository into a container you are creating using a compose.yaml file from that same repository.
+              # The reason this is necessary in this Jenkins configuration is because bind mounts in any compose.yaml file from your repositories are from the host machine's filesystem to the container(s) you may create, not from the ephemeral agent container into the container(s) you may create.
+              mounts:
+                - "type=bind,source=${DOCKER_VOLUMES}/Jenkins/workspace,destination=/home/jenkins/workspace"
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
@@ -57,13 +62,13 @@ credentials:
               description: "Gitea credentials for organization folder"
           - usernamePassword:
               scope: GLOBAL
-              id: "bitwarden"
+              id: "bitwarden-api-key"
               username: "${BITWARDEN_CLIENTID}" # See compose.yaml
               password: "${BITWARDEN_CLIENTSECRET}" # See compose.yaml
               description: "Bitwarden CLI API Credentials"
           - string:
               scope: GLOBAL
-              id: "bitwardenPassword"
+              id: "bitwarden-master-password"
               secret: "${BITWARDEN_MASTER_PASSWORD}" # See compose.yaml
               description: "Bitwarden CLI Master Password"
 
