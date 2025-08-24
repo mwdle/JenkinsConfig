@@ -39,6 +39,7 @@ jenkins:
               network: "DockerProxy" # DockerProxy network for docker-socket proxy container -- See compose.yaml
               environment:
                 - "DOCKER_HOST=${DOCKER_HOST}"
+                - "BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}"
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
@@ -54,6 +55,17 @@ credentials:
               username: "${GIT_USERNAME}"
               password: "${GIT_TOKEN}"
               description: "Gitea credentials for organization folder"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "bitwarden"
+              username: "${BITWARDEN_CLIENTID}"
+              password: "${BITWARDEN_CLIENTSECRET}"
+              description: "Bitwarden CLI API Credentials"
+          - string:
+              scope: GLOBAL
+              id: "bitwardenPassword"
+              secret: "${BITWARDEN_MASTER_PASSWORD}"
+              description: "Bitwarden CLI Master Password"
 
 unclassified:
   location:
