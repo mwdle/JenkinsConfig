@@ -84,6 +84,19 @@ unclassified:
         manageHooks: true
         serverUrl: ${GIT_SERVER_URL} # See compose.yaml
 
+  globalLibraries:
+    libraries:
+      - defaultVersion: "main"
+        name: "JenkinsBitwardenUtils"
+        retriever:
+          modernSCM:
+            scm:
+              git:
+                credentialsId: "git-creds"
+                remote: ${GIT_SERVER_URL}/mwdle/JenkinsBitwardenUtils.git" # Also on Github! https://github.com/mwdle/JenkinsBitwardenUtils
+                traits:
+                  - "gitBranchDiscovery"
+
   mailer:
     replyToAddress: ${REPLY_TO_EMAIL} # See compose.yaml
     smtpHost: ${SMTP_HOST} # See compose.yaml
