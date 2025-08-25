@@ -19,6 +19,7 @@ RUN apt-get update && \
     openssh-client \
     ansible \
     unzip \
+    jq \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O bw.zip 'https://bitwarden.com/download/?app=cli&platform=linux' && \
