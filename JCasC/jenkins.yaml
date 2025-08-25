@@ -93,7 +93,7 @@ unclassified:
             scm:
               git:
                 credentialsId: "git-creds"
-                remote: ${GIT_SERVER_URL}/mwdle/JenkinsBitwardenUtils.git" # Also on Github! https://github.com/mwdle/JenkinsBitwardenUtils
+                remote: ${GIT_SERVER_URL}/mwdle/JenkinsBitwardenUtils.git # Also on Github! https://github.com/mwdle/JenkinsBitwardenUtils
                 traits:
                   - "gitBranchDiscovery"
 
