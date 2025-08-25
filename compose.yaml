@@ -10,6 +10,7 @@ services:
       - Jenkins
       - DockerProxy
     environment:
+      - TZ=${TZ}
       - CASC_JENKINS_CONFIG=/var/jenkins_home/JCasC
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false # Skip setup wizard, JCasC (jenkins.yaml) handles it
       - JENKINS_URL=${JENKINS_URL}
@@ -42,7 +43,6 @@ services:
     volumes:
       - ${DOCKER_VOLUMES}/Jenkins/home:/var/jenkins_home
       - ./JCasC:/var/jenkins_home/JCasC
-      - /etc/localtime:/etc/localtime:ro
     deploy:
       resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
         limits:
