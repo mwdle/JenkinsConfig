@@ -45,8 +45,9 @@ jenkins:
               # Without path mirroring, Compose configurations with relative bind mounts (e.g. './relativeFile') fail to deploy because agent and host Docker Daemon see different absolute paths.
               # This configuration ensures both agent and host resolve './relativeFile' to the same location.
               # Requires ${DOCKER_VOLUMES}/Jenkins/workspace directory structure on host filesystem -- See compose.yaml.
+              # Mounts to .../workspace/workspace to ensure agent root workspace is `${DOCKER_VOLUMES}/Jenkins/workspace` and job/repository workspace is `{DOCKER_VOLUMES}/Jenkins/workspace/workspace` (workspace can have 2 different meanings in Jenkins)
               mounts:
-                - "type=bind,source=${DOCKER_VOLUMES}/Jenkins/workspace,destination=${DOCKER_VOLUMES}/Jenkins/workspace"
+                - "type=bind,source=${DOCKER_VOLUMES}/Jenkins/workspace/workspace,destination=${DOCKER_VOLUMES}/Jenkins/workspace/workspace"
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
