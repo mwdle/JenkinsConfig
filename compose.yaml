@@ -1,3 +1,4 @@
+# This Docker Compose configuration is tailored for the JCasC (`JCasC/jenkins.yaml`) that is bundled within this repository
 services:
   Jenkins:
     container_name: Jenkins

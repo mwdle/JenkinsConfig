@@ -1,3 +1,4 @@
+# This JCasC file is tailored for the Docker Compose configuration (`../compose.yaml`) that is bundled within this repository
 jenkins:
   systemMessage: "${systemMessage}"
   noUsageStatistics: true
