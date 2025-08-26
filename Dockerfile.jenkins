@@ -11,5 +11,4 @@ RUN jenkins-plugin-cli --plugins \
     pipeline-utility-steps:2.19.0 \
     junit:1335.v6b_a_a_e18534e1 \
     dark-theme:574.va_19f05d54df5 \
-    ws-cleanup:0.49 \
-    mailer:522.va_995fa_cfb_8b_d
+    ws-cleanup:0.49
