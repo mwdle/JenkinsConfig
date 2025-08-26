@@ -66,19 +66,19 @@ services:
       - COMMIT=0
       - CONFIGS=0
       - CONTAINERS=1
-      - DISTRIBUTION=1
+      - DISTRIBUTION=0
       - EXEC=1
-      - GRPC=1
+      - GRPC=0
       - IMAGES=1
       - INFO=1
       - NETWORKS=1
       - NODES=0
       - PLUGINS=0
-      - SERVICES=0
-      - SESSION=0
+      - SERVICES=1
+      - SESSION=1
       - SWARM=0
-      - SYSTEM=1
-      - TASKS=0
+      - SYSTEM=0
+      - TASKS=1
       - VOLUMES=1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:Z # `:Z` allows the Docker Socket Proxy to privately access to the host's docker socket on SELinux enabled systems without using `privileged: true`. If SELinux is not enabled, `:Z` will be ignored.
