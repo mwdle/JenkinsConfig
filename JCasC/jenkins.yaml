@@ -17,7 +17,7 @@ jenkins:
   authorizationStrategy: # IMPORTANT: This configuration assumes a single user instance. If this instance will have more than one user or the users are not fully trusted, this authorization strategy MUST BE REPLACED with something more secure.
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
-  disableRememberMe: true # Disable "Keep me signed in”
+  disableRememberMe: false # Don't disable "Keep me signed in”
 
   crumbIssuer: "standard"
   mode: NORMAL
