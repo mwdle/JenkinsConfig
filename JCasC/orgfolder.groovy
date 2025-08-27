@@ -15,6 +15,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             credentialsId('git-creds')
             traits {
                 giteaExcludeArchivedRepositories {}
+                giteaTagDiscovery {}
                 giteaBranchDiscovery {
                     strategyId(3) // Discover all branches
                 }
