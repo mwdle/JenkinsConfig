@@ -3,7 +3,7 @@ import jenkins.model.Jenkins
 organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     displayName(System.getenv('ORGFOLDER_DISPLAY_NAME'))
     description(System.getenv('ORGFOLDER_DESCRIPTION'))
-    triggers {
+    triggers { // Rescan organization daily
         periodicFolderTrigger {
             interval('24h')
         }
