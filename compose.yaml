@@ -97,11 +97,11 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
-    # deploy:
-    #   resources:
-    #     limits:
-    #       cpus: "1"
-    #       memory: 1GB
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 128M
 
   AgentImageBuilder: # Dummy container to enforce that the `Dockerfile.agent` is built to the host Docker cache for Jenkins to utilize in ephemeral agent templates via Docker Plugin
     container_name: AgentImageBuilder
