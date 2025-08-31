@@ -1,5 +1,7 @@
 import jenkins.model.Jenkins
 
+def gitServerUrl = System.getenv('GIT_SERVER_URL')
+
 organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     displayName(System.getenv('ORGFOLDER_DISPLAY_NAME'))
     description(System.getenv('ORGFOLDER_DESCRIPTION'))
@@ -10,9 +12,9 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     }
     organizations {
         gitea { // Token requires repository:read/write, user:read, and organization:read permissions
-            serverUrl(System.getenv('GIT_SERVER_URL'))
+            serverUrl(gitServerUrl)
             repoOwner(System.getenv('GIT_USERNAME'))
-            credentialsId('git-creds')
+            credentialsId('git-creds') // Credential ID for git server credentials -- see JCasC (`jenkins/jenkins.yaml`)
             traits {
                 giteaExcludeArchivedRepositories {}
                 giteaTagDiscovery {}
@@ -32,19 +34,26 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
         }
     }
 
-    // Detect markerfiles for certain projects and associate a shared library or fall back to a Jenkinsfile within the SCM repository
+    // Detect markerfiles for certain projects and associate either a remote Jenkinsfile or fall back to a Jenkinsfile within the SCM repository
     projectFactories {
         workflowMultiBranchProjectFactory {
             scriptPath('Jenkinsfile')
         }
-        inlineDefinitionMultiBranchProjectFactory {
-            markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
-            sandbox(true) // Enable Groovy sandbox for security
-            // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the Docker Compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
-            script('''
-                library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines -- defined in compose.yaml
-                dockerComposePipeline()
-            ''')
+        remoteJenkinsFileWorkflowBranchProjectFactory { // https://plugins.jenkins.io/remote-file/
+            localMarker("compose.yaml")
+            matchBranches(false)
+            remoteJenkinsFile("pipelines/dockerCompose/Jenkinsfile")
+            remoteJenkinsFileSCM {
+                gitSCM {
+                    userRemoteConfigs {
+                        userRemoteConfig {
+                            name("JenkinsPipelines") // Custom Repository Name or ID
+                            url("${gitServerUrl}/mwdle/JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines
+                            refspec("main")
+                        }
+                    }
+                }
+            }
         }
     }
 }

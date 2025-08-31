@@ -9,7 +9,7 @@ RUN jenkins-plugin-cli --plugins \
     pipeline-model-definition:2.2265.v140e610fe9d5 \
     pipeline-stage-view:2.38 \
     pipeline-utility-steps:2.19.0 \
-    inline-pipeline:1.0.32.vf433f2d57630 \
+    remote-file:1.24 \
     junit:1335.v6b_a_a_e18534e1 \
     dark-theme:574.va_19f05d54df5 \
     ws-cleanup:0.49
