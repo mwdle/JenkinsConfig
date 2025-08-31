@@ -31,4 +31,17 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             numToKeep(10000)
         }
     }
+
+  // Detect markerfiles for certain projects and associate a shared library or fall back to a Jenkinsfile within the SCM repository
+  projectFactories {
+    workflowMultiBranchProjectFactory {
+      scriptPath('Jenkinsfile')
+    },
+    inlineDefinitionMultiBranchProjectFactory {
+      markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
+      sandbox(true) // Enable Groovy sandbox for security
+      // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the docker compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
+      script('library("JenkinsPipelines").dockerComposePipeline()') // See https://github.com/mwdle/JenkinsPipelines
+    }
+  }
 }
