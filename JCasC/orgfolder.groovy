@@ -26,10 +26,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
         }
     }
     orphanedItemStrategy {
-        discardOldItems {
-            daysToKeep(730)
-            numToKeep(10000)
-        }
+        discardOldItems {}
     }
 
     // Detect markerfiles for certain projects and associate either a shared library or fall back to a Jenkinsfile within the SCM repository
