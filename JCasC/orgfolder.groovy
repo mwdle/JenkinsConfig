@@ -36,7 +36,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
   projectFactories {
     workflowMultiBranchProjectFactory {
       scriptPath('Jenkinsfile')
-    },
+    }
     inlineDefinitionMultiBranchProjectFactory {
       markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
       sandbox(true) // Enable Groovy sandbox for security
