@@ -34,7 +34,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
         workflowMultiBranchProjectFactory {
             scriptPath('Jenkinsfile')
         }
-        inlineDefinitionMultiBranchProjectFactory {
+        inlineDefinitionMultiBranchProjectFactory { // Requires inline pipeline plugin -- see `Dockerfile.jenkins`
             markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
             sandbox(true) // Enable Groovy sandbox for security
             // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the Docker Compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
