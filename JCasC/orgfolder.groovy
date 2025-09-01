@@ -5,7 +5,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     description(System.getenv('ORGFOLDER_DESCRIPTION'))
     triggers { // Rescan organization daily
         periodicFolderTrigger {
-            interval('24h')
+            interval('1h')
         }
     }
     organizations {
