@@ -39,8 +39,8 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             sandbox(true) // Enable Groovy sandbox for security
             // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the Docker Compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
             script('''
-                library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines -- defined in compose.yaml
-                dockerComposePipeline()
+                library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines -- see compose.yaml
+                dockerComposePipeline() // This specific pipeline is dependent on the JenkinsBitwardenUtils shared library (https://github.com/mwdle/JenkinsBitwardenUtils) -- see compose.yaml
             ''')
         }
     }
