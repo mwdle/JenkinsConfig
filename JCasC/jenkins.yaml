@@ -39,8 +39,8 @@ jenkins:
             dockerTemplateBase:
               image: jenkins-agent:local # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
               environmentsString: |- # See compose.yaml
-                BITWARDEN_SERVER_URL=https://vault.mwdle.com
-                TZ=America/Denver
+                BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}
+                TZ=${TZ}
               # Agent containers use Docker CLI to control host Docker daemon (Docker-out-of-Docker pattern).
               # Enables relative bind mounts in Docker Compose configurations by mounting agent container workspaces to host filesystem and mirroring Jenkins workspace paths on the host and the agent containers.
               # Without path mirroring, Compose configurations with relative bind mounts (e.g. './relativeFile') fail to deploy because agent container and host Docker Daemon see different absolute paths.
@@ -48,7 +48,8 @@ jenkins:
               # Requires ${DOCKER_VOLUMES}/Jenkins/workspace directory structure on host filesystem -- See compose.yaml.
               mountsString: |-
                 type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock
-                type=bind,source=/home/mwdle/docker/Jenkins/workspace,destination=/home/mwdle/docker/Jenkins/workspace
+                type=bind,source=/etc/localtime,destination=/etc/localtime:ro
+                type=bind,source=${DOCKER_VOLUMES}/Jenkins/workspace,destination=${DOCKER_VOLUMES}/Jenkins/workspace
               extraGroupsString: "${DOCKER_GID}"
             labelString: "docker"
             mode: EXCLUSIVE
