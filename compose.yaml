@@ -37,9 +37,6 @@ services:
       - BITWARDEN_CLIENTID=${BITWARDEN_CLIENTID}
       - BITWARDEN_CLIENTSECRET=${BITWARDEN_CLIENTSECRET}
       - BITWARDEN_MASTER_PASSWORD=${BITWARDEN_MASTER_PASSWORD}
-    depends_on:
-      AgentImageBuilder: # Agent image should be built to host Docker cache before using Jenkins (not strictly necessary, can be safely removed if you are willing to accept that you won't be notified of failure to build until Jenkins runs a job with this agent template and fails to find the image)
-        condition: service_completed_successfully
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DOCKER_VOLUMES}/Jenkins/home:/var/jenkins_home
