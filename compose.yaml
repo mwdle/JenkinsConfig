@@ -52,18 +52,6 @@ services:
           cpus: "1"
           memory: 1GB
 
-  AgentImageBuilder: # Dummy container to enforce that the `Dockerfile.agent` is built to the host Docker cache for Jenkins to utilize in ephemeral agent templates via Docker Plugin
-    container_name: AgentImageBuilder
-    # This image tag is defined here, built using the provided `Dockerfile.agent` and is referenced within JCasC (jenkins.yaml) at clouds.docker.templates.dockerTemplateBase.image
-    # If someone prunes images on the host and this image is deleted from the host Docker cache, builds will delay and eventually fail. To fix this, simply run `docker compose up -d --build AgentImageBuilder`
-    image: jenkins-agent:local
-    build:
-      context: .
-      dockerfile: ./Dockerfile.agent
-    restart: "no"
-    network_mode: "none"
-    command: echo "Successfully built Jenkins Agent Image to host Docker cache. Exiting..." # This line ensures the container exits immediately, so it serves its purpose of ensuring the image is built to the host's Docker cache.
-
 networks:
   Jenkins:
     name: Jenkins

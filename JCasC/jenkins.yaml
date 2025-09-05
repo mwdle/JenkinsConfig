@@ -37,7 +37,7 @@ jenkins:
               attach:
                 user: "jenkins" # Custom user defined in `Dockerfile.agent`
             dockerTemplateBase:
-              image: jenkins-agent:local # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
+              image: mwdle/jenkins-agent:latest # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
               environmentsString: |- # See compose.yaml
                 BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}
                 TZ=${TZ}
