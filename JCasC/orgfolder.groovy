@@ -40,7 +40,9 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the Docker Compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
             script('''
                 library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines -- see compose.yaml
-                dockerComposePipeline() // This specific pipeline is dependent on the JenkinsBitwardenUtils shared library (https://github.com/mwdle/JenkinsBitwardenUtils) -- see compose.yaml
+                // `useBitwardenDefault: true` means this pipeline will always pull in a .env file from Bitwarden secure note that has the same name as the repository.
+                // If this behavior is not desired, simply create a Jenkinsfile in the repository that is the same as this one, but with `useBitwardenDefault: false`.
+                dockerComposePipeline(useBitwardenDefault: true) // This specific pipeline is dependent on the JenkinsBitwardenUtils shared library (https://github.com/mwdle/JenkinsBitwardenUtils) -- see compose.yaml
             ''')
         }
     }
