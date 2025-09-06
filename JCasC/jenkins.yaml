@@ -35,9 +35,9 @@ jenkins:
         templates:
           - connector:
               attach:
-                user: "jenkins" # Custom user defined in `Dockerfile.agent`
+                user: "jenkins" # Assumes the agent should run as user `jenkins`
             dockerTemplateBase:
-              image: mwdle/jenkins-agent:latest # Custom container image defined in Dockerfile.agent and built to host's Docker cache via compose.yaml
+              image: mwdle/jenkins-agent:latest # Custom Jenkins agent container image
               environmentsString: |- # See compose.yaml
                 BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}
                 TZ=${TZ}
@@ -77,6 +77,12 @@ credentials:
               id: "bitwarden-master-password"
               secret: "${BITWARDEN_MASTER_PASSWORD}" # See compose.yaml
               description: "Bitwarden CLI Master Password"
+          - usernamePassword:
+              scope: GLOBAL
+              id: "docker-hub"
+              username: "${DOCKER_USERNAME}" # See compose.yaml
+              password: "${DOCKER_TOKEN}" # See compose.yaml
+              description: "Docker Hub Access Token"
 
 unclassified:
   location:
