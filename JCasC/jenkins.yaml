@@ -37,7 +37,7 @@ jenkins:
               attach:
                 user: "jenkins" # Assumes the agent should run as user `jenkins`
             dockerTemplateBase:
-              image: mwdle/jenkins-agent:latest # Custom Jenkins agent container image
+              image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
               environmentsString: |- # See compose.yaml
                 BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}
                 TZ=${TZ}
