@@ -37,12 +37,26 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
         inlineDefinitionMultiBranchProjectFactory { // Requires inline pipeline plugin -- see `Dockerfile.jenkins`
             markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
             sandbox(true) // Enable Groovy sandbox for security
-            // Inline pipeline script means a Jenkinsfile is not required in every repository/branch -- in this case the Docker Compose pipeline is used for any repository containing a `compose.yaml` file (if Jenkinsfile doesn't exist for that repository)
+            // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
+            // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
             script('''
-                library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines -- see compose.yaml
-                // `useBitwardenDefault: true` means this pipeline will always pull in a .env file from Bitwarden secure note that has the same name as the repository.
-                // If this behavior is not desired, simply create a Jenkinsfile in the repository that is the same as this one, but with `useBitwardenDefault: false`.
-                dockerComposePipeline(useBitwardenDefault: true) // This specific pipeline is dependent on the JenkinsBitwardenUtils shared library (https://github.com/mwdle/JenkinsBitwardenUtils) -- see compose.yaml
+                library("JenkinsPipelines")
+                /*
+                 * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
+                 *
+                 * Default Configuration:
+                 * - defaultBitwardenEnabled: true
+                 * Enables Bitwarden integration by default.
+                 *
+                 * Requirements:
+                 * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
+                 * - JenkinsBitwardenUtils Library (for Bitwarden integration):
+                 * https://github.com/mwdle/JenkinsBitwardenUtils
+                 *
+                 * (Note: The `library()` step is used here. A standalone Jenkinsfile would
+                 * typically use `@Library("JenkinsPipelines") _` at the top.)
+                 */
+                dockerComposePipeline(defaultBitwardenEnabled: true)
             ''')
         }
     }
