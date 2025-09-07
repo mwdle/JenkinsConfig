@@ -40,23 +40,23 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
             script('''
-                library("JenkinsPipelines")
-                /*
-                 * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
-                 *
-                 * Default Configuration:
-                 * - defaultBitwardenEnabled: true
-                 * Enables Bitwarden integration by default.
-                 *
-                 * Requirements:
-                 * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
-                 * - JenkinsBitwardenUtils Library (for Bitwarden integration):
-                 * https://github.com/mwdle/JenkinsBitwardenUtils
-                 *
-                 * (Note: The `library()` step is used here. A standalone Jenkinsfile would
-                 * typically use `@Library("JenkinsPipelines") _` at the top.)
-                 */
-                dockerComposePipeline(defaultBitwardenEnabled: true)
+library("JenkinsPipelines")
+/*
+    * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
+    *
+    * Default Configuration:
+    * - defaultBitwardenEnabled: true
+    * Enables Bitwarden integration by default.
+    *
+    * Requirements:
+    * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
+    * - JenkinsBitwardenUtils Library (for Bitwarden integration):
+    * https://github.com/mwdle/JenkinsBitwardenUtils
+    *
+    * (Note: The `library()` step is used here. A standalone Jenkinsfile would
+    * typically use `@Library("JenkinsPipelines") _` at the top.)
+    */
+dockerComposePipeline(defaultBitwardenEnabled: true)
             ''')
         }
     }
