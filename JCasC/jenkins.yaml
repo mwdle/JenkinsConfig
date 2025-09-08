@@ -137,3 +137,4 @@ unclassified:
 
 jobs:
   - file: /var/jenkins_home/JCasC/orgfolder.groovy
+  - file: /var/jenkins_home/JCasC/multibranch.groovy
