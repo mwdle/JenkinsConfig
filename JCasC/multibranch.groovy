@@ -4,7 +4,7 @@ multibranchPipelineJob('DinoGlue') {
     branchSources {
         git {
             id("DinoGlue Repository")
-            remote("${System.getenv('GIT_SERVER_URL')}/dino3harris/dinoglue.git")
+            remote("${System.getenv('GIT_SERVER_URL')}/Dino3Harris/Deployment.git")
             credentialsId('git-creds')
         }
     }
