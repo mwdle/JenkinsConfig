@@ -2,17 +2,12 @@ multibranchPipelineJob('DinoGlue') {
     displayName('DinoGlue')
     description('Multibranch Pipeline Job for DinoGlue by Dino3Harris')
     branchSources {
-        gitea {
-            id('DinoGlue')
-            serverUrl(System.getenv('GIT_SERVER_URL'))
+        git {
+            remote("${System.getenv('GIT_SERVER_URL')}/Dino3Harris/DinoGlue.git")
             credentialsId('git-creds')
-            repoOwner('Dino3Harris')
-            repository('Deployment')
             traits {
-                giteaTagDiscovery()
-                giteaBranchDiscovery {
-                    strategyId(3) // Discover all branches
-                }
+                gitTagDiscovery()
+                gitBranchDiscovery()
             }
         }
     }
