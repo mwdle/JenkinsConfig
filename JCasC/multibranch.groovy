@@ -3,6 +3,7 @@ multibranchPipelineJob('DinoGlue') {
     description('Multibranch Pipeline Job for DinoGlue by Dino3Harris')
     branchSources {
         git {
+            id("DinoGlue Repository")
             remote("${System.getenv('GIT_SERVER_URL')}/Dino3Harris/DinoGlue.git")
             credentialsId('git-creds')
         }
