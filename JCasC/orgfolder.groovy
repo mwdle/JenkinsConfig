@@ -42,24 +42,24 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             script("""
 library("JenkinsPipelines")
 /*
-* This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
-*
-* Default Configuration:
-* - defaultBitwardenEnabled: true
-* Enables Bitwarden integration by default.
-*
-* - persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments"
-* Enables the persistent workspace mode to support relative bind mounts in docker-compose.yml.
-* The path points to this application's dedicated deployment directory on the host.
-*
-* Requirements:
-* - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
-* - JenkinsBitwardenUtils Library (for Bitwarden integration):
-* https://github.com/mwdle/JenkinsBitwardenUtils
-*
-* (Note: The `library()` step is used here. A standalone Jenkinsfile would
-* typically use `@Library("JenkinsPipelines") _` at the top.)
-*/
+ * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
+ *
+ * Default Configuration:
+ * - defaultBitwardenEnabled: true
+ * Enables Bitwarden integration by default.
+ *
+ * - persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments"
+ * Enables the persistent workspace mode to support relative bind mounts in docker-compose.yml.
+ * The path points to this application's dedicated deployment directory on the host.
+ *
+ * Requirements:
+ * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
+ * - JenkinsBitwardenUtils Library (for Bitwarden integration):
+ * https://github.com/mwdle/JenkinsBitwardenUtils
+ *
+ * (Note: The `library()` step is used here. A standalone Jenkinsfile would
+ * typically use `@Library("JenkinsPipelines") _` at the top.)
+ */
 dockerComposePipeline(defaultBitwardenEnabled: true, persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
             """)
         }
