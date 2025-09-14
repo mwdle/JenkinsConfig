@@ -39,7 +39,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             sandbox(true) // Enable Groovy sandbox for security
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
-            script('''
+            script("""
 library("JenkinsPipelines")
 /*
 * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
@@ -47,6 +47,10 @@ library("JenkinsPipelines")
 * Default Configuration:
 * - defaultBitwardenEnabled: true
 * Enables Bitwarden integration by default.
+*
+* - persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments"
+* Enables the persistent workspace mode to support relative bind mounts in docker-compose.yml.
+* The path points to this application's dedicated deployment directory on the host.
 *
 * Requirements:
 * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
@@ -56,8 +60,8 @@ library("JenkinsPipelines")
 * (Note: The `library()` step is used here. A standalone Jenkinsfile would
 * typically use `@Library("JenkinsPipelines") _` at the top.)
 */
-dockerComposePipeline(defaultBitwardenEnabled: true)
-            ''')
+dockerComposePipeline(defaultBitwardenEnabled: true, persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
+            """)
         }
     }
 }
