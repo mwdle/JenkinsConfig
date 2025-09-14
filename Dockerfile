@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.527-jdk21
+FROM jenkins/jenkins:lts
 
 RUN jenkins-plugin-cli --plugins \
     configuration-as-code:1985.vdda_32d0c4ea_b_ \
