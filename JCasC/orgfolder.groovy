@@ -34,7 +34,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
         workflowMultiBranchProjectFactory {
             scriptPath('Jenkinsfile')
         }
-        inlineDefinitionMultiBranchProjectFactory { // Requires inline pipeline plugin -- see `Dockerfile.jenkins`
+        inlineDefinitionMultiBranchProjectFactory { // Requires inline pipeline plugin -- see `Dockerfile`
             markerFile('compose.yaml') // Load any repository that has a `compose.yaml` file
             sandbox(true) // Enable Groovy sandbox for security
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.

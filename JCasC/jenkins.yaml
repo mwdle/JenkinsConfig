@@ -12,7 +12,7 @@ jenkins:
           password: "${JENKINS_ADMIN_PASSWORD}" # See compose.yaml
           properties:
             - theme:
-                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile.jenkins`
+                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile`
 
   authorizationStrategy: # IMPORTANT: This configuration assumes a single user instance. If this instance will have more than one user or the users are not fully trusted, this authorization strategy MUST BE REPLACED with something more secure.
     loggedInUsersCanDoAnything:

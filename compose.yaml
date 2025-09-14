@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./Dockerfile.jenkins # ./Dockerfile.jenkins installs plugins on top of jenkins:lts image
+      dockerfile: ./Dockerfile # ./Dockerfile installs plugins on top of jenkins:lts image
     networks:
       - Jenkins
     environment:
