@@ -1,3 +1,4 @@
+// All environment variables used in this file are defined in `compose.yaml` in the root of this repository
 multibranchPipelineJob('DinoGlue') {
     displayName('DinoGlue')
     description('Multibranch Pipeline Job for DinoGlue by Dino3Harris')

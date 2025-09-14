@@ -1,5 +1,6 @@
 import jenkins.model.Jenkins
 
+// All environment variables used in this file are defined in `compose.yaml` in the root of this repository
 organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     displayName(System.getenv('ORGFOLDER_DISPLAY_NAME'))
     description(System.getenv('ORGFOLDER_DESCRIPTION'))
