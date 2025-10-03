@@ -89,6 +89,13 @@ unclassified:
     url: "${JENKINS_URL}"
     adminAddress: "${ADMIN_ADDRESS}" # See compose.yaml
 
+  bitwarden:
+    serverUrl: "${BITWARDEN_SERVER_URL}"
+    apiCredentialId: "bitwarden-api-key"
+    masterPasswordCredentialId: "bitwarden-master-password"
+    cacheDuration: 30
+    fileCredentialSuffixes: ".env"
+
   giteaServers:
     servers:
       - credentialsId: git-creds
