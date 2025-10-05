@@ -39,7 +39,6 @@ jenkins:
             dockerTemplateBase:
               image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
               environmentsString: |- # See compose.yaml
-                BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL}
                 TZ=${TZ}
               # Agent containers use Docker CLI to control host Docker daemon (Docker-out-of-Docker pattern).
               # Enables relative bind mounts in Docker Compose configurations by mounting a folder from host filesystem into the agent container and mirroring paths on the host and the agent containers.
@@ -77,12 +76,6 @@ credentials:
               id: "bitwarden-master-password"
               secret: "${BITWARDEN_MASTER_PASSWORD}" # See compose.yaml
               description: "Bitwarden CLI Master Password"
-          - usernamePassword:
-              scope: GLOBAL
-              id: "docker-hub"
-              username: "${DOCKER_USERNAME}" # See compose.yaml
-              password: "${DOCKER_TOKEN}" # See compose.yaml
-              description: "Docker Hub Access Token"
 
 unclassified:
   location:
@@ -105,15 +98,6 @@ unclassified:
 
   globalLibraries:
     libraries:
-      - defaultVersion: "main"
-        name: "JenkinsBitwardenUtils"
-        retriever:
-          modernSCM:
-            scm:
-              git:
-                remote: ${GIT_SERVER_URL}/mwdle/JenkinsBitwardenUtils.git # Also on Github! https://github.com/mwdle/JenkinsBitwardenUtils
-                traits:
-                  - "gitBranchDiscovery"
       - defaultVersion: "main"
         name: "JenkinsPipelines"
         retriever:
