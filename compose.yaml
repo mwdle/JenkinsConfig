@@ -17,8 +17,6 @@ services:
       - JENKINS_URL=${JENKINS_URL}
       - DOCKER_HOST=unix:///var/run/docker.sock # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - DOCKER_GID=${DOCKER_GID} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
-      - DOCKER_USERNAME=${DOCKER_USERNAME} # Used in JCasC to automatically configure Docker Hub credentials
-      - DOCKER_TOKEN=${DOCKER_TOKEN} # Used in JCasC to automatically configure Docker Hub credentials
       - DOCKER_VOLUMES=${DOCKER_VOLUMES} # I use a single folder to manage all my Docker bind mounts, this is passed into the container and referenced within JCasC (jenkins.yaml) in order to allow agent containers to spin up containers and compose configurations that utilize the DOCKER_VOLUMES environment variable
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_PORT=465 # If changing the SMTP port, you must also change `useSsl: true` within JCasC (jenkins.yaml)
@@ -35,10 +33,10 @@ services:
       - ORGFOLDER_DISPLAY_NAME=${ORGFOLDER_DISPLAY_NAME}
       - ORGFOLDER_DESCRIPTION=${ORGFOLDER_DESCRIPTION}
       - GIT_SERVER_URL=${GIT_SERVER_URL}
-      - BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL} # Used in JCasC to automatically configure Docker Hub credentials
-      - BITWARDEN_CLIENTID=${BITWARDEN_CLIENTID} # Used in JCasC to automatically configure Docker Hub credentials
-      - BITWARDEN_CLIENTSECRET=${BITWARDEN_CLIENTSECRET} # Used in JCasC to automatically configure Docker Hub credentials
-      - BITWARDEN_MASTER_PASSWORD=${BITWARDEN_MASTER_PASSWORD} # Used in JCasC to automatically configure Docker Hub credentials
+      - BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
+      - BITWARDEN_CLIENTID=${BITWARDEN_CLIENTID} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
+      - BITWARDEN_CLIENTSECRET=${BITWARDEN_CLIENTSECRET} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
+      - BITWARDEN_MASTER_PASSWORD=${BITWARDEN_MASTER_PASSWORD} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DOCKER_VOLUMES}/Jenkins/home:/var/jenkins_home
