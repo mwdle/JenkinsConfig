@@ -43,23 +43,22 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             script('''
 library("JenkinsPipelines")
 /*
- * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
+ * This Docker Compose deployment is managed by the `dockerComposePipeline` defined in the
+ * Jenkins Pipelines shared library (https://github.com/mwdle/JenkinsPipelines).
  *
- * Default Configuration:
- * - defaultUseSecrets: true
- * Enables secret .env file injection by default.
+ * Configuration:
+ * - envFileCredentialIds:
+ * Injects secrets from a Jenkins 'Secret file' credential. It expects the credential ID
+ * to match the name of this repository, suffixed with '.env'.
  *
- * - persistentWorkspace: "${DOCKER_VOLUMES}/deployments"
- * Enables the persistent workspace mode to support relative bind mounts in docker-compose.yml.
- * The path points to this application's dedicated deployment directory on the host.
+ * - persistentWorkspace:
+ * Deploys to a stable directory on the host to preserve data between builds. The path is
+ * dynamically set using the DOCKER_VOLUMES environment variable.
  *
- * Requirements:
- * - JenkinsPipelines Library: https://github.com/mwdle/JenkinsPipelines
- *
- * (Note: The `library()` step is used here. A standalone Jenkinsfile would
- * typically use `@Library("JenkinsPipelines") _` at the top.)
+ * Note: This script uses the `library()` step. A standalone Jenkinsfile would
+ * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
-dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${DOCKER_VOLUMES}/deployments")
+dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${env.DOCKER_VOLUMES}/deployments")
             ''')
         }
     }
