@@ -40,7 +40,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             sandbox(true) // Enable Groovy sandbox for security
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
-            script('''
+            script("""
 library("JenkinsPipelines")
 /*
  * This Docker Compose deployment is managed by the `dockerComposePipeline` defined in the
@@ -58,8 +58,8 @@ library("JenkinsPipelines")
  * Note: This script uses the `library()` step. A standalone Jenkinsfile would
  * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
-dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${env.DOCKER_VOLUMES}/deployments")
-            ''')
+dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
+            """)
         }
     }
 }
