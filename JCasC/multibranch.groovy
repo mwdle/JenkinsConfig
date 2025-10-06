@@ -6,7 +6,7 @@ multibranchPipelineJob('DinoGlue') {
         git {
             id("DinoGlue Repository")
             remote("${System.getenv('GIT_SERVER_URL')}/Dino3Harris/Deployment.git") // https://github.com/Dino3Harris
-            credentialsId('Gitea PAT')
+            credentialsId('git-creds')
         }
     }
     orphanedItemStrategy {

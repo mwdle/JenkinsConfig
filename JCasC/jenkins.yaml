@@ -61,6 +61,12 @@ credentials:
       - credentials:
           - usernamePassword:
               scope: GLOBAL
+              id: "git-creds"
+              username: "${GIT_USERNAME}" # See compose.yaml
+              password: "${GIT_TOKEN}" # See compose.yaml
+              description: "Gitea credentials for organization folder"
+          - usernamePassword:
+              scope: GLOBAL
               id: "bitwarden-api-key"
               username: "${BITWARDEN_CLIENTID}" # See compose.yaml
               password: "${BITWARDEN_CLIENTSECRET}" # See compose.yaml
@@ -85,7 +91,7 @@ unclassified:
 
   giteaServers:
     servers:
-      - credentialsId: "Gitea PAT"
+      - credentialsId: git-creds
         displayName: scm
         manageHooks: true
         serverUrl: ${GIT_SERVER_URL} # See compose.yaml
