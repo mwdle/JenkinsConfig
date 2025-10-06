@@ -40,7 +40,6 @@ jenkins:
               image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
               environmentsString: |- # See compose.yaml
                 TZ=${TZ}
-                DOCKER_VOLUMES=${DOCKER_VOLUMES}
               # Agent containers use Docker CLI to control host Docker daemon (Docker-out-of-Docker pattern).
               # Enables relative bind mounts in Docker Compose configurations by mounting a folder from host filesystem into the agent container and mirroring paths on the host and the agent containers.
               # Without path mirroring, Compose configurations with relative bind mounts (e.g. './relativeFile') fail to deploy because agent container and host Docker Daemon see different absolute paths and have separate filesystems.
