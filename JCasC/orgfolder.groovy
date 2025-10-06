@@ -12,8 +12,8 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
     organizations {
         gitea { // Token requires repository:read/write, user:read, and organization:read permissions
             serverUrl(System.getenv('GIT_SERVER_URL'))
-            repoOwner(System.getenv('GIT_USERNAME'))
-            credentialsId('git-creds') // Credential ID for git server credentials -- see JCasC (`jenkins/jenkins.yaml`)
+            repoOwner("mwdle") // Git username to get repositories for
+            credentialsId('Gitea PAT') // Credential ID for git server credentials
             traits {
                 giteaExcludeArchivedRepositories {}
                 giteaTagDiscovery {}
