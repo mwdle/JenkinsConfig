@@ -40,7 +40,7 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             sandbox(true) // Enable Groovy sandbox for security
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
-            script("""
+            script('''
 library("JenkinsPipelines")
 /*
  * This pipeline uses the 'dockerComposePipeline' to manage the application's deployment with a default configuration.
@@ -49,7 +49,7 @@ library("JenkinsPipelines")
  * - defaultUseSecrets: true
  * Enables secret .env file injection by default.
  *
- * - persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments"
+ * - persistentWorkspace: "${DOCKER_VOLUMES}/deployments"
  * Enables the persistent workspace mode to support relative bind mounts in docker-compose.yml.
  * The path points to this application's dedicated deployment directory on the host.
  *
@@ -59,8 +59,8 @@ library("JenkinsPipelines")
  * (Note: The `library()` step is used here. A standalone Jenkinsfile would
  * typically use `@Library("JenkinsPipelines") _` at the top.)
  */
-dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
-            """)
+dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${DOCKER_VOLUMES}/deployments")
+            ''')
         }
     }
 }
