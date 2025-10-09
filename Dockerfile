@@ -11,4 +11,4 @@ RUN jenkins-plugin-cli --plugins \
     pipeline-utility-steps:2.19.0 \
     inline-pipeline:1.0.32.vf433f2d57630 \
     dark-theme:574.va_19f05d54df5 \
-    bitwarden-credentials-provider:latest
+    bitwarden-credentials-provider:201.v4d205c17c67e
