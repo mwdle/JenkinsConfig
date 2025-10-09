@@ -34,9 +34,6 @@ services:
       - ORGFOLDER_DESCRIPTION=${ORGFOLDER_DESCRIPTION}
       - GIT_SERVER_URL=${GIT_SERVER_URL}
       - BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
-      - BITWARDEN_CLIENTID=${BITWARDEN_CLIENTID} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
-      - BITWARDEN_CLIENTSECRET=${BITWARDEN_CLIENTSECRET} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
-      - BITWARDEN_MASTER_PASSWORD=${BITWARDEN_MASTER_PASSWORD} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DOCKER_VOLUMES}/Jenkins/home:/var/jenkins_home
