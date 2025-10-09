@@ -55,28 +55,6 @@ jenkins:
             name: "docker"
             remoteFs: "/home/jenkins" # Assumes the agent has /home/jenkins
 
-credentials:
-  system:
-    domainCredentials:
-      - credentials:
-          - usernamePassword:
-              scope: GLOBAL
-              id: "git-creds"
-              username: "${GIT_USERNAME}" # See compose.yaml
-              password: "${GIT_TOKEN}" # See compose.yaml
-              description: "Gitea credentials for organization folder"
-          - usernamePassword:
-              scope: GLOBAL
-              id: "bitwarden-api-key"
-              username: "${BITWARDEN_CLIENTID}" # See compose.yaml
-              password: "${BITWARDEN_CLIENTSECRET}" # See compose.yaml
-              description: "Bitwarden CLI API Credentials"
-          - string:
-              scope: GLOBAL
-              id: "bitwarden-master-password"
-              secret: "${BITWARDEN_MASTER_PASSWORD}" # See compose.yaml
-              description: "Bitwarden CLI Master Password"
-
 unclassified:
   location:
     url: "${JENKINS_URL}"
@@ -91,7 +69,7 @@ unclassified:
 
   giteaServers:
     servers:
-      - credentialsId: git-creds
+      - credentialsId: git-creds # See gitcreds.groovy
         displayName: scm
         manageHooks: true
         serverUrl: ${GIT_SERVER_URL} # See compose.yaml
@@ -127,5 +105,6 @@ unclassified:
               daysToKeepStr: "730"
 
 jobs:
+  - file: /var/jenkins_home/JCasC/gitcreds.groovy
   - file: /var/jenkins_home/JCasC/orgfolder.groovy
   - file: /var/jenkins_home/JCasC/multibranch.groovy
