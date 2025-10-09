@@ -1,3 +1,9 @@
+import jenkins.model.Jenkins
+import com.cloudbees.plugins.credentials.SystemCredentialsProvider
+import com.cloudbees.plugins.credentials.domains.Domain
+import com.cloudbees.plugins.credentials.CredentialsScope
+import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl
+
 // Configure the git credentials (Always perform this in Groovy DSL instead of JCasC to prevent JCasC from wiping user created credentials on Jenkins restart)
 def credentialId = "git-creds"
 def credentialDescription = "Git credentials for organization folder"
