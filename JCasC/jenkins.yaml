@@ -64,7 +64,7 @@ unclassified:
     serverUrl: "${BITWARDEN_SERVER_URL}"
     apiCredentialId: "bitwarden-api-key"
     masterPasswordCredentialId: "bitwarden-master-password"
-    cacheDuration: 30
+    cacheDuration: 5
     fileCredentialSuffixes: ".env"
 
   giteaServers:
