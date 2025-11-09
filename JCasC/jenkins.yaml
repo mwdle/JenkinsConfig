@@ -49,7 +49,8 @@ jenkins:
                 type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock
                 type=bind,source=/etc/localtime,destination=/etc/localtime:ro
                 type=bind,source=${DOCKER_VOLUMES}/deployments,destination=${DOCKER_VOLUMES}/deployments
-              extraGroupsString: "${DOCKER_GID}"
+              extraGroupsString: "${DOCKER_GID}" # See compose.yaml
+              dnsString: "${AGENT_DNS}" # See compose.yaml
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
