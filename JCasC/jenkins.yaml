@@ -50,6 +50,7 @@ jenkins:
                 type=bind,source=/etc/localtime,destination=/etc/localtime:ro
                 type=bind,source=${DOCKER_VOLUMES}/deployments,destination=${DOCKER_VOLUMES}/deployments
               extraGroupsString: "${DOCKER_GID}"
+              network: "JenkinsAgent" # Assumes you have already created a Docker network called `JenkinsAgent`
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"
