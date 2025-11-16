@@ -51,6 +51,7 @@ jenkins:
                 type=bind,source=${DOCKER_VOLUMES}/deployments,destination=${DOCKER_VOLUMES}/deployments
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
               dnsString: "${AGENT_DNS}" # See compose.yaml
+              dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
             labelString: "docker"
             mode: EXCLUSIVE
             name: "docker"

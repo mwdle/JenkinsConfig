@@ -18,6 +18,7 @@ services:
       - DOCKER_HOST=unix:///var/run/docker.sock # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - DOCKER_GID=${DOCKER_GID} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - AGENT_DNS=${AGENT_DNS} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
+      - AGENT_DNS_SEARCH=${AGENT_DNS_SEARCH} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - DOCKER_VOLUMES=${DOCKER_VOLUMES} # I use a single folder to manage all my Docker bind mounts, this is passed into the container and referenced within JCasC (jenkins.yaml) in order to allow agent containers to spin up containers and compose configurations that utilize the DOCKER_VOLUMES environment variable
       - SMTP_HOST=${SMTP_HOST}
       - SMTP_PORT=465 # If changing the SMTP port, you must also change `useSsl: true` within JCasC (jenkins.yaml)
