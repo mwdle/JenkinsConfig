@@ -35,7 +35,6 @@ jenkins:
         templates:
           - connector:
               attach:
-                user: "jenkins" # Assumes the agent should run as user `jenkins`
             dockerTemplateBase:
               image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
               environmentsString: |- # See compose.yaml
@@ -54,8 +53,6 @@ jenkins:
               dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
             labelString: "docker"
             mode: EXCLUSIVE
-            name: "docker"
-            remoteFs: "/home/jenkins" # Assumes the agent has /home/jenkins
 
 unclassified:
   location:
