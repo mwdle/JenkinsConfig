@@ -65,7 +65,7 @@ unclassified:
     apiCredentialId: "bitwarden-api-key"
     masterPasswordCredentialId: "bitwarden-master-password"
     cacheDuration: 5
-    fileCredentialSuffixes: ".env"
+    fileCredentialSuffixes: ".env,.yaml"
 
   giteaServers:
     servers:
