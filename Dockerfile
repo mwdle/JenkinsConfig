@@ -7,7 +7,7 @@ RUN jenkins-plugin-cli --plugins \
     docker-plugin:1308.vff6e33248305 \
     job-dsl:1.93 \
     git:5.8.1 \
-    gitea:250.v76a_0b_d4fef5b_ \
+    gitea:268.v75e47974c01d \
     pipeline-model-definition:2.2277.v00573e73ddf1 \
     pipeline-stage-view:2.38 \
     pipeline-utility-steps:2.20.0 \
