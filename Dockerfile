@@ -2,13 +2,13 @@ FROM jenkins/jenkins:lts
 
 RUN jenkins-plugin-cli --plugins \
     bitwarden-credentials-provider:243.v0dcb_22a_ce3da_ \
-    configuration-as-code:2006.v001a_2ca_6b_574 \
+    configuration-as-code:2036.v0b_c2de701dcb_ \
     dark-theme:574.va_19f05d54df5 \
     docker-plugin:1308.vff6e33248305 \
     job-dsl:1.93 \
-    git:5.8.1 \
+    git:5.9.0 \
     gitea:268.v75e47974c01d \
     pipeline-model-definition:2.2277.v00573e73ddf1 \
-    pipeline-stage-view:2.38 \
+    pipeline-stage-view:2.39 \
     pipeline-utility-steps:2.20.0 \
     inline-pipeline:1.0.32.vf433f2d57630 \
