@@ -1,8 +1,8 @@
 FROM jenkins/jenkins:lts
 
 RUN jenkins-plugin-cli --plugins \
-    bitwarden-credentials-provider:243.v0dcb_22a_ce3da_ \
-    configuration-as-code:2036.v0b_c2de701dcb_ \
+    bitwarden-credentials-provider:254.vd33c35d1b_fb_5 \
+    configuration-as-code:2037.v8e5349845172 \
     dark-theme:574.va_19f05d54df5 \
     docker-plugin:1308.vff6e33248305 \
     job-dsl:1.93 \
