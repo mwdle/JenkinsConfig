@@ -55,6 +55,12 @@ jenkins:
             labelString: "docker"
             mode: EXCLUSIVE
 
+security:
+  contentSecurityPolicy:
+    enforce: true
+  scriptApproval:
+    forceSandbox: true
+
 unclassified:
   location:
     url: "${JENKINS_URL}"
