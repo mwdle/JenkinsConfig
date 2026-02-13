@@ -5,7 +5,7 @@ RUN jenkins-plugin-cli --plugins \
     configuration-as-code:2037.v8e5349845172 \
     dark-theme:574.va_19f05d54df5 \
     docker-plugin:1308.vff6e33248305 \
-    job-dsl:1.93 \
+    job-dsl:3654.vdf58f53e2d15 \
     git:5.10.0 \
     gitea:268.v75e47974c01d \
     pipeline-model-definition:2.2277.v00573e73ddf1 \
