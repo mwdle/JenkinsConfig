@@ -58,7 +58,7 @@ library("JenkinsPipelines")
  * Note: This script uses the `library()` step. A standalone Jenkinsfile would
  * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
-dockerComposePipeline(envFileCredentialIds: [env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
+dockerComposePipeline(envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
             """)
         }
     }
