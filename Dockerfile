@@ -4,7 +4,7 @@ RUN jenkins-plugin-cli --plugins \
     bitwarden-credentials-provider:254.vd33c35d1b_fb_5 \
     configuration-as-code:2037.v8e5349845172 \
     dark-theme:574.va_19f05d54df5 \
-    docker-plugin:1308.vff6e33248305 \
+    docker-plugin:1316.v75635a_002b_0a_ \
     job-dsl:3654.vdf58f53e2d15 \
     git:5.10.0 \
     gitea:273.vb_78d13f6d9a_d \
