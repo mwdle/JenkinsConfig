@@ -35,7 +35,7 @@ jenkins:
         templates:
           - connector:
               attach:
-                user: "jenkins" # Assumes the agent should run as user `jenkins`
+                user: "jenkins"
             dockerTemplateBase:
               image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
               environmentsString: |- # See compose.yaml
@@ -53,6 +53,22 @@ jenkins:
               dnsString: "${AGENT_DNS}" # See compose.yaml
               dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
             labelString: "docker"
+            mode: EXCLUSIVE
+          - connector:
+              attach:
+                user: "root"
+            dockerTemplateBase:
+              image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
+              environmentsString: |- # See compose.yaml
+                TZ=${TZ}
+              mountsString: |-
+                type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock
+                type=bind,source=/etc/localtime,destination=/etc/localtime:ro
+                type=bind,source=${DOCKER_VOLUMES},destination=${DOCKER_VOLUMES},readonly
+              extraGroupsString: "${DOCKER_GID}" # See compose.yaml
+              dnsString: "${AGENT_DNS}" # See compose.yaml
+              dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
+            labelString: "backups"
             mode: EXCLUSIVE
 
 security:
