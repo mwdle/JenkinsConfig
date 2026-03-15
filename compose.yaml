@@ -38,7 +38,7 @@ services:
       - BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${DOCKER_VOLUMES}/Jenkins/home:/var/jenkins_home
+      - ${DOCKER_VOLUMES}/Jenkins:/var/jenkins_home
       - ./JCasC:/var/jenkins_home/JCasC
     group_add:
       - ${DOCKER_GID} # Replace this with the output from `getent group docker | cut -d: -f3` on your host machine in order to ensure Jenkins controller has permission to access the Docker Socket
