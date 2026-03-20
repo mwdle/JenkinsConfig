@@ -104,7 +104,7 @@ unclassified:
           modernSCM:
             scm:
               gitSource:
-                remote: ${GIT_SERVER_URL}/mwdle/JenkinsPipelines.git # Also on Github! https://github.com/mwdle/JenkinsPipelines
+                remote: ${GIT_SERVER_URL}/lab/JenkinsPipelines.git # Also on Github! https://github.com/mwdle/JenkinsPipelines
                 traits:
                   - "gitBranchDiscovery"
 
