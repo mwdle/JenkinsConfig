@@ -12,3 +12,4 @@ RUN jenkins-plugin-cli --plugins \
     pipeline-stage-view:2.39 \
     pipeline-utility-steps:2.20.0 \
     inline-pipeline:1.0.32.vf433f2d57630 \
+    generic-webhook-trigger:2.4.1
