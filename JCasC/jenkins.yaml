@@ -123,8 +123,8 @@ unclassified:
       - simpleBuildDiscarder:
           discarder:
             logRotator:
-              numToKeepStr: "1000000"
-              daysToKeepStr: "730"
+              numToKeepStr: "100"
+              daysToKeepStr: "1095"
 
   whitelist: # Generic Webhook Trigger
     enabled: true
