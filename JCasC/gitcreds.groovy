@@ -4,7 +4,7 @@ import com.cloudbees.plugins.credentials.domains.Domain
 import com.cloudbees.plugins.credentials.CredentialsScope
 import com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl
 
-// Configure the git credentials (Always perform this in Groovy DSL instead of JCasC to prevent JCasC from wiping user created credentials on Jenkins restart)
+// Configure the git credentials (Groovy DSL instead of JCasC so user created credentials persist JCasC load)
 def credentialId = "git-creds"
 def credentialDescription = "Git credentials for organization folder"
 def username = System.getenv("GIT_USERNAME")
@@ -16,7 +16,7 @@ if (existingCredentials.contains(credentialId)) {
   println "'${credentialId}' already exists! Skipping creation."
 }
 else {
-    if (username && password) {        
+    if (username && password) {
         def newCredential = new UsernamePasswordCredentialsImpl(
             CredentialsScope.GLOBAL,
             credentialId,
