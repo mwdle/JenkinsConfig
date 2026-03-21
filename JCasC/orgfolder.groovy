@@ -65,7 +65,7 @@ library("JenkinsPipelines")
 dockerComposePipeline(
     envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
     persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments",
-    alertEmail: "${ALERT_EMAIL}"
+    alertEmail: "${env.ALERT_EMAIL}"
 )
             """)
         }
