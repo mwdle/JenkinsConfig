@@ -48,17 +48,25 @@ library("JenkinsPipelines")
  *
  * Configuration:
  * - envFileCredentialIds:
- * Injects secrets from a Jenkins 'Secret file' credential. It expects the credential ID
- * to match the name of this repository, suffixed with '.env'.
+ *   Injects secrets from a Jenkins 'Secret file' credential. It expects the credential ID
+ *   to match the name of this repository, suffixed with '.env'.
  *
  * - persistentWorkspace:
- * Deploys to a stable directory on the host to preserve data between builds. The path is
- * dynamically set using the DOCKER_VOLUMES environment variable.
+ *   Deploys to a stable directory on the host to preserve data between builds. The path is
+ *   dynamically set using the DOCKER_VOLUMES environment variable.
+ *
+ * - alertEmail:
+ *   Sends an email notification to the provided email address on build failure
+ *   In this case, uses global ALERT_EMAIL environment variable set in JCasC.
  *
  * Note: This script uses the `library()` step. A standalone Jenkinsfile would
  * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
-dockerComposePipeline(envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"], persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments")
+dockerComposePipeline(
+    envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
+    persistentWorkspace: "${System.getenv('DOCKER_VOLUMES')}/deployments",
+    alertEmail: "${ALERT_EMAIL}"
+)
             """)
         }
     }
