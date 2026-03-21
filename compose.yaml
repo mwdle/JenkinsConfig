@@ -36,6 +36,7 @@ services:
       - ORGFOLDER_DESCRIPTION=${ORGFOLDER_DESCRIPTION}
       - GIT_SERVER_URL=${GIT_SERVER_URL}
       - BITWARDEN_SERVER_URL=${BITWARDEN_SERVER_URL} # Used in JCasC to automatically configure Bitwarden Credentials Provider Plugin
+      - ALERT_EMAIL=${ALERT_EMAIL} # Used in pipelines for email notifications
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DOCKER_VOLUMES}/Jenkins:/var/jenkins_home

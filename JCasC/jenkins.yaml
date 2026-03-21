@@ -71,6 +71,12 @@ jenkins:
             labelString: "backups"
             mode: EXCLUSIVE
 
+  globalNodeProperties:
+    - envVars:
+        env:
+          - key: "ALERT_EMAIL"
+            value: "${ALERT_EMAIL}"
+
 security:
   contentSecurityPolicy:
     enforce: true
