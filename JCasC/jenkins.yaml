@@ -78,6 +78,8 @@ jenkins:
             value: "${DOCKER_VOLUMES}"
           - key: "ALERT_EMAIL"
             value: "${ALERT_EMAIL}"
+          - key: "CONTAINER_REGISTRY_HOST"
+            value: "${GIT_SERVER_URL}"
 
 security:
   contentSecurityPolicy:
