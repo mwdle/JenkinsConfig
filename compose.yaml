@@ -15,6 +15,7 @@ services:
       - CASC_JENKINS_CONFIG=/var/jenkins_home/JCasC
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false # Skip setup wizard, JCasC (jenkins.yaml) handles it
       - JENKINS_URL=${JENKINS_URL}
+      - CONTAINER_REGISTRY_HOST=${CONTAINER_REGISTRY_HOST}
       - DOCKER_HOST=unix:///var/run/docker.sock # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - DOCKER_GID=${DOCKER_GID} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates
       - AGENT_DNS=${AGENT_DNS} # Used in JCasC (jenkins.yaml) to configure Docker Clouds plugin and agent templates

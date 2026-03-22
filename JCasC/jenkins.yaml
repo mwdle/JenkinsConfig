@@ -74,12 +74,12 @@ jenkins:
   globalNodeProperties:
     - envVars:
         env: # Set variables from Compose.yaml as global Jenkins variables for use in pipelines
+          - key: "CONTAINER_REGISTRY_HOST"
+            value: "${CONTAINER_REGISTRY_HOST}"
           - key: "DOCKER_VOLUMES"
             value: "${DOCKER_VOLUMES}"
           - key: "ALERT_EMAIL"
             value: "${ALERT_EMAIL}"
-          - key: "CONTAINER_REGISTRY_HOST"
-            value: "${GIT_SERVER_URL}"
 
 security:
   contentSecurityPolicy:
