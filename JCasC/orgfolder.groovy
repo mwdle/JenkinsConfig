@@ -47,6 +47,7 @@ library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines
  * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
 dockerComposePipeline(
+    disableConcurrentBuilds: true,
     envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
     persistentWorkspace: "\${env.DOCKER_VOLUMES}/deployments",
     alertEmail: "\${env.ALERT_EMAIL}"
