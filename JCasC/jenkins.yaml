@@ -37,7 +37,7 @@ jenkins:
               attach:
                 user: "jenkins"
             dockerTemplateBase:
-              image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
+              image: "${CONTAINER_REGISTRY_HOST}/lab/jenkins-agent:latest"
               environmentsString: |- # See compose.yaml
                 TZ=${TZ}
               # Agent containers use Docker CLI to control host Docker daemon (Docker-out-of-Docker pattern).
@@ -58,7 +58,7 @@ jenkins:
               attach:
                 user: "root"
             dockerTemplateBase:
-              image: mwdle/jenkins-agent:latest # https://hub.docker.com/repository/docker/mwdle/jenkins-agent/general
+              image: "${CONTAINER_REGISTRY_HOST}/lab/jenkins-agent:latest"
               environmentsString: |- # See compose.yaml
                 TZ=${TZ}
               mountsString: |-
