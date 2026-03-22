@@ -41,24 +41,8 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
             script("""
-library("JenkinsPipelines")
+library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines
 /*
- * This Docker Compose deployment is managed by the `dockerComposePipeline` defined in the
- * Jenkins Pipelines shared library (https://github.com/mwdle/JenkinsPipelines).
- *
- * Configuration:
- * - envFileCredentialIds:
- *   Injects secrets from a Jenkins 'Secret file' credential. It expects the credential ID
- *   to match the name of this repository, suffixed with '.env'.
- *
- * - persistentWorkspace:
- *   Deploys to a stable directory on the host to preserve data between builds. The path is
- *   dynamically set using the DOCKER_VOLUMES environment variable.
- *
- * - alertEmail:
- *   Sends an email notification to the provided email address on build failure
- *   In this case, uses global ALERT_EMAIL environment variable set in JCasC.
- *
  * Note: This script uses the `library()` step. A standalone Jenkinsfile would
  * typically use `@Library("JenkinsPipelines") _` at the top of the file.
  */
