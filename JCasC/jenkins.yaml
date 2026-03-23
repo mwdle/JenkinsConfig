@@ -22,6 +22,7 @@ jenkins:
   crumbIssuer: "standard"
   mode: NORMAL
   numExecutors: 0 # No executors on built-in node
+  quietPeriod: 0
 
   clouds:
     - docker:
