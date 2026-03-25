@@ -3,7 +3,7 @@ configuration-as-code:2056.v6a_e126e16620
 dark-theme:652.vea_da_dfea_e769
 docker-plugin:1316.v75635a_002b_0a_
 job-dsl:3654.vdf58f53e2d15
-git:5.10.0
+git:5.10.1
 gitea:273.vb_78d13f6d9a_d
 pipeline-model-definition:2.2277.v00573e73ddf1
 pipeline-stage-view:2.39
