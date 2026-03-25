@@ -3,11 +3,11 @@ name: Jenkins
 services:
   Jenkins:
     container_name: Jenkins
-    image: jenkins:lts
+    image: mwdle/jenkins:custom
     restart: unless-stopped
     build:
       context: .
-      dockerfile: ./Dockerfile # ./Dockerfile installs plugins on top of jenkins:lts image
+      dockerfile: ./Dockerfile
     networks:
       - Jenkins
     environment:
@@ -47,8 +47,12 @@ services:
     deploy:
       resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
         limits:
-          cpus: "1"
-          memory: 1GB
+          cpus: 1.5
+          memory: 1.5GB
+          pids: 4096
+        reservations:
+          cpus: 0.5
+          memory: 256M
 
 networks:
   Jenkins:
