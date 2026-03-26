@@ -94,6 +94,7 @@ unclassified:
     adminAddress: "${ADMIN_ADDRESS}" # See compose.yaml
 
   bitwarden:
+    cliExecutablePath: "/usr/local/bin/bw"
     serverUrl: "${BITWARDEN_SERVER_URL}"
     apiCredentialId: "bitwarden-api-key"
     masterPasswordCredentialId: "bitwarden-master-password"
