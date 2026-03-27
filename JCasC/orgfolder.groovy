@@ -41,12 +41,14 @@ organizationFolder(System.getenv('ORGFOLDER_NAME')) {
             // This inline script is the default pipeline for any repository containing a 'compose.yaml' file that does NOT have its own Jenkinsfile.
             // To override this default, create a 'Jenkinsfile' in the target repository which will always take precedence over this inline definition.
             script("""
+// A standalone Jenkinsfile would typically use `@Library(...) _` instead of `library(...)`
 library("JenkinsPipelines") // See https://github.com/mwdle/JenkinsPipelines
-/*
- * Note: This script uses the `library()` step. A standalone Jenkinsfile would
- * typically use `@Library("JenkinsPipelines") _` at the top of the file.
- */
+
+// Disable index triggers on branches that are not main/master
+boolean isMainBranch = (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master')
+boolean disableIndexTriggers = !isMainBranch
 dockerComposePipeline(
+    disableIndexTriggers: disableIndexTriggers,
     disableConcurrentBuilds: true,
     envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
     persistentWorkspace: "\${env.DOCKER_VOLUMES}/deployments",
