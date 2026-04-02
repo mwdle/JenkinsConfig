@@ -50,9 +50,6 @@ services:
           cpus: 2.5
           memory: 2GB
           pids: 4096
-        reservations:
-          cpus: 1
-          memory: 512M
 
 networks:
   Jenkins:
