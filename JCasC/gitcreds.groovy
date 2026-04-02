@@ -1,4 +1,3 @@
-import jenkins.model.Jenkins
 import com.cloudbees.plugins.credentials.SystemCredentialsProvider
 import com.cloudbees.plugins.credentials.domains.Domain
 import com.cloudbees.plugins.credentials.CredentialsScope
