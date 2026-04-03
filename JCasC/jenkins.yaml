@@ -85,6 +85,8 @@ jenkins:
 security:
   contentSecurityPolicy:
     enforce: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true
   scriptApproval:
     forceSandbox: true
 
