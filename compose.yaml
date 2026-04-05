@@ -46,15 +46,33 @@ services:
       - ${DOCKER_GID} # Replace this with the output from `getent group docker | cut -d: -f3` on your host machine in order to ensure Jenkins controller has permission to access the Docker Socket
 
     user: "${UID}:${GID}"
+    read_only: true
+    tmpfs:
+      - /tmp
     security_opt:
       - no-new-privileges:true
+    cap_drop:
+      - ALL
+
+    logging:
+      driver: "journald"
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -fSs -o /dev/null http://localhost:8080/login || exit 1",
+        ]
+      interval: 1m
+      timeout: 5s
+      retries: 3
+      start_period: 30s
 
     deploy:
       resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
         limits:
           cpus: 2.5
           memory: 2GB
-          pids: 4096
+          pids: 1024
 
 networks:
   Jenkins:
