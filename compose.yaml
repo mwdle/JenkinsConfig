@@ -55,13 +55,9 @@ services:
       - ALL
 
     logging:
-      driver: "journald"
+      driver: journald
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "curl -fSs -o /dev/null http://localhost:8080/login || exit 1",
-        ]
+      test: curl -fSs -o /dev/null http://localhost:8080/login || exit 1
       interval: 1m
       timeout: 5s
       retries: 3
