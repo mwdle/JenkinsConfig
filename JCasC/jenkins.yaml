@@ -53,6 +53,13 @@ jenkins:
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
               dnsString: "${AGENT_DNS}" # See compose.yaml
               dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
+              securityOpts:
+                - "no-new-privileges:true"
+              capabilitiesToDrop:
+                - "ALL"
+              cpus: "4"
+              memoryLimit: 8192
+              memorySwap: 8192
             labelString: "docker"
             mode: EXCLUSIVE
           - connector:
@@ -69,6 +76,16 @@ jenkins:
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
               dnsString: "${AGENT_DNS}" # See compose.yaml
               dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
+              securityOpts:
+                - "no-new-privileges:true"
+              capabilitiesToDrop:
+                - "ALL"
+              capabilitiesToAdd:
+                - "DAC_OVERRIDE"
+                - "FOWNER"
+              cpus: "4"
+              memoryLimit: 8192
+              memorySwap: 8192
             labelString: "backups"
             mode: EXCLUSIVE
 
