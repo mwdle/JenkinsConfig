@@ -3,7 +3,7 @@ FROM jenkins/jenkins:2.541.3-lts-jdk25@sha256:cec8050ffd7c7cd1bd4c838ffa04a04e43
 USER root
 
 # Pin the Bitwarden CLI version for the Bitwarden Credentials Provider Plugin
-ENV BW_CLI_VERSION="2026.1.0"
+ENV BW_CLI_VERSION="2026.3.0"
 
 # Download the x86 BW CLI zip file directly from GitHub releases
 RUN curl -Lso bw.zip "https://github.com/bitwarden/clients/releases/download/cli-v${BW_CLI_VERSION}/bw-oss-linux-${BW_CLI_VERSION}.zip" \
