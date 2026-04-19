@@ -39,6 +39,7 @@ jenkins:
                 user: "jenkins"
             dockerTemplateBase:
               image: "${CONTAINER_REGISTRY_HOST}/lab/jenkins-agent:latest"
+              pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
               environmentsString: |- # See compose.yaml
                 TZ=${TZ}
               # Agent containers use Docker CLI to control host Docker daemon (Docker-out-of-Docker pattern).
@@ -67,6 +68,7 @@ jenkins:
                 user: "root"
             dockerTemplateBase:
               image: "${CONTAINER_REGISTRY_HOST}/lab/jenkins-agent:latest"
+              pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
               environmentsString: |- # See compose.yaml
                 TZ=${TZ}
               mountsString: |-
