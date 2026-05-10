@@ -7,6 +7,6 @@ git:5.10.1
 gitea:273.vb_78d13f6d9a_d
 pipeline-model-definition:2.2277.v00573e73ddf1
 pipeline-stage-view:2.41
-pipeline-utility-steps:2.20.0
+pipeline-utility-steps:3.810.va_7672d206740
 inline-pipeline:1.0.32.vf433f2d57630
 generic-webhook-trigger:2.4.1
