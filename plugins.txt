@@ -9,4 +9,4 @@ pipeline-model-definition:2.2277.v00573e73ddf1
 pipeline-stage-view:2.41
 pipeline-utility-steps:3.810.va_7672d206740
 inline-pipeline:1.0.32.vf433f2d57630
-generic-webhook-trigger:2.4.1
+generic-webhook-trigger:2.4.2
