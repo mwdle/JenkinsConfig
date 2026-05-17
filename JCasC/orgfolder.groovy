@@ -47,7 +47,6 @@ boolean isMainBranch = (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
 boolean disableIndexTriggers = !isMainBranch
 dockerComposePipeline(
     disableIndexTriggers: disableIndexTriggers,
-    disableConcurrentBuilds: true,
     envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
     persistentWorkspace: "\${env.DOCKER_VOLUMES}/deployments",
     alertEmail: "\${env.ALERT_EMAIL}",
