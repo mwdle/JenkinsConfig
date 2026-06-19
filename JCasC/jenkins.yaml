@@ -52,8 +52,6 @@ jenkins:
                 type=bind,source=/etc/localtime,destination=/etc/localtime:ro
                 type=bind,source=${DOCKER_VOLUMES}/deployments,destination=${DOCKER_VOLUMES}/deployments
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
-              dnsString: "${AGENT_DNS}" # See compose.yaml
-              dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
               securityOpts:
                 - "no-new-privileges:true"
               capabilitiesToDrop:
@@ -76,8 +74,6 @@ jenkins:
                 type=bind,source=/etc/localtime,destination=/etc/localtime:ro
                 type=bind,source=${DOCKER_VOLUMES},destination=${DOCKER_VOLUMES}
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
-              dnsString: "${AGENT_DNS}" # See compose.yaml
-              dnsSearchString: "${AGENT_DNS_SEARCH}" # See compose.yaml
               securityOpts:
                 - "no-new-privileges:true"
               capabilitiesToDrop:
