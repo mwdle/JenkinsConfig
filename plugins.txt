@@ -1,5 +1,5 @@
 bitwarden-credentials-provider:267.v0ff910de10b_b_
-configuration-as-code:2099.ve3a_6e23f4960
+configuration-as-code:2100.vb_fd699d2a_09c
 dark-theme:652.vea_da_dfea_e769
 docker-plugin:1324.v2fb_b_df97fe1d
 job-dsl:3654.vdf58f53e2d15
