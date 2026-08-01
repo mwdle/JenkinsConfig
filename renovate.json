@@ -6,7 +6,7 @@
       "customType": "regex",
       "managerFilePatterns": ["**/Dockerfile"],
       "matchStrings": [
-        "ENV BW_CLI_VERSION=[\"']?(?<currentValue>[^\\s\"']+)[\"']?"
+        "ARG BW_CLI_VERSION=[\"']?(?<currentValue>[^\\s\"']+)[\"']?"
       ],
       "depNameTemplate": "bitwarden/clients",
       "datasourceTemplate": "github-releases",
