@@ -4,7 +4,7 @@ dark-theme:652.vea_da_dfea_e769
 docker-plugin:1324.v2fb_b_df97fe1d
 job-dsl:3654.vdf58f53e2d15
 git:5.10.1
-gitea:273.vb_78d13f6d9a_d
+gitea:282.v31f586d2cb_30
 pipeline-model-definition:2.2291.v2934911987b_6
 pipeline-stage-view:2.41
 pipeline-utility-steps:3.810.va_7672d206740
