@@ -2,7 +2,7 @@ bitwarden-credentials-provider:267.v0ff910de10b_b_
 configuration-as-code:2117.vc05a_0b_e6b_f4e
 dark-theme:652.vea_da_dfea_e769
 docker-plugin:1324.v2fb_b_df97fe1d
-job-dsl:3654.vdf58f53e2d15
+job-dsl:3732.v9a_c49a_61a_313
 git:5.10.1
 gitea:282.v31f586d2cb_30
 pipeline-model-definition:2.2291.v2934911987b_6
