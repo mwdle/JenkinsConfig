@@ -51,6 +51,7 @@ jenkins:
                 type=bind,source=/var/run/docker.sock,destination=/var/run/docker.sock
                 type=bind,source=/etc/localtime,destination=/etc/localtime:ro
                 type=bind,source=${DOCKER_VOLUMES}/deployments,destination=${DOCKER_VOLUMES}/deployments
+                type=volume,source=trivy-cache,destination=/home/jenkins/.cache/trivy
               extraGroupsString: "${DOCKER_GID}" # See compose.yaml
               securityOpts:
                 - "no-new-privileges:true"
