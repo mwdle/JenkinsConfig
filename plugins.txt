@@ -10,3 +10,4 @@ pipeline-stage-view:2.41
 pipeline-utility-steps:3.810.va_7672d206740
 inline-pipeline:1.0.32.vf433f2d57630
 generic-webhook-trigger:2.4.2
+warnings-ng:13.10223.v8f61dc07f2df
