@@ -162,9 +162,6 @@ unclassified:
       - hmacAlgorithm: "HmacSHA256"
         host: "172.16.0.0/16"
 
-  ansiColorBuildWrapper:
-    globalColorMapName: "xterm"
-
 jobs:
   - file: /var/jenkins_home/JCasC/gitcreds.groovy
   - file: /var/jenkins_home/JCasC/orgfolder.groovy
