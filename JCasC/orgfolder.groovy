@@ -51,7 +51,9 @@ dockerComposePipeline(
     persistentWorkspace: "\${env.DOCKER_VOLUMES}/deployments",
     alertEmail: "\${env.ALERT_EMAIL}",
     postCheckoutSteps: {
-        securityScanStep('compose.yaml')
+        stage('Security Scan') {
+            securityScanStep('compose.yaml')
+        }
     }
 )
             """)
