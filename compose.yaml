@@ -58,7 +58,7 @@ services:
     deploy:
       resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
         limits:
-          cpus: 2.5
+          cpus: 3
           memory: 2GB
           pids: 1024
 
