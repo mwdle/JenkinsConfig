@@ -54,12 +54,6 @@ services:
 
     logging:
       driver: journald
-    healthcheck:
-      test: curl -fSs -o /dev/null http://localhost:8080/health || exit 1
-      interval: 1m
-      timeout: 5s
-      retries: 3
-      start_period: 30s
 
     deploy:
       resources: # Jenkins controller is configured with Docker Plugin to provide ephemeral build agents and this configuration assumes a single user, thus the low resource limits. Always make sure to configure resources limits in the dynamic build agent templates!
