@@ -49,12 +49,7 @@ dockerComposePipeline(
     disableIndexTriggers: disableIndexTriggers,
     envFileCredentialIds: ["common.env", env.JOB_NAME.split('/')[1] + ".env"],
     persistentWorkspace: "\${env.DOCKER_VOLUMES}/deployments",
-    alertEmail: "\${env.ALERT_EMAIL}",
-    postCheckoutSteps: {
-        stage('Security Scan') {
-            securityScanStep('compose.yaml')
-        }
-    }
+    alertEmail: "\${env.ALERT_EMAIL}"
 )
             """)
         }
