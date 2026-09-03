@@ -1,4 +1,4 @@
-bitwarden-credentials-provider:413.vfb_62cb_5839d1
+bitwarden-credentials-provider:422.v4b_8597d04103
 configuration-as-code:2121.v86fe99d4b_b_a_b_
 dark-theme:652.vea_da_dfea_e769
 docker-plugin:1327.v9524f1ee134e
