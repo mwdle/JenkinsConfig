@@ -1,0 +1,54 @@
+[Unit]
+Requires=podman.socket
+After=podman.socket
+
+[Container]
+Image=localhost/jenkins:latest
+Pull=never
+ContainerName=jenkins
+
+Network=jenkins.network
+# TODO: remove this local test port once a reverse proxy provides access to Jenkins.
+PublishPort=127.0.0.1:8080:8080
+
+EnvironmentFile=%d/environment
+Environment=CASC_JENKINS_CONFIG=/var/jenkins_home/JCasC
+Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
+Environment=DOCKER_HOST=unix:///run/podman/podman.sock
+
+Volume=%h/containers/jenkins:/var/jenkins_home
+Volume=./JCasC:/var/jenkins_home/JCasC:ro
+Volume=%t/podman/podman.sock:/run/podman/podman.sock
+
+ReadOnly=true
+ReadOnlyTmpfs=true
+UserNS=keep-id
+NoNewPrivileges=true
+DropCapability=all
+# Required for podman socket access
+SecurityLabelDisable=true
+
+HealthCmd=["CMD-SHELL", "curl -fSs -o /dev/null http://localhost:8080/health || exit 1"]
+HealthStartupInterval=5s
+HealthStartupTimeout=5s
+HealthStartupRetries=60
+
+HealthInterval=1m
+HealthTimeout=5s
+HealthRetries=3
+HealthOnFailure=kill
+Notify=healthy
+
+Memory=2G
+PidsLimit=1024
+
+[Service]
+CPUQuota=300%
+Restart=always
+RestartSec=5s
+ExecStartPre=/usr/bin/mkdir -p %h/containers/jenkins
+ExecStartPre=/usr/bin/chmod 0700 %h/containers/jenkins
+LoadCredentialEncrypted=environment:JenkinsConfig.env.cred
+
+[Install]
+WantedBy=default.target
