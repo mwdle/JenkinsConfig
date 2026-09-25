@@ -4,10 +4,9 @@ This repository builds and configures Jenkins using JCasC. `jenkins.container` r
 
 ## Requirements
 
-Jenkins uses the rootless Podman socket to provision dynamic agents through the Docker-compatible API. Enable the socket and allow the user service manager to start at boot:
+Jenkins uses the rootless Podman socket to provision dynamic agents through the Docker-compatible API. The Quadlet starts the socket through its systemd dependency. Allow the user service manager to start at boot:
 
 ```console
-systemctl --user enable --now podman.socket
 loginctl enable-linger "$USER"
 ```
 
@@ -47,7 +46,6 @@ Paste the complete environment, press Enter after its final line, and then press
 Build and start Jenkins:
 
 ```console
-systemctl --user enable --now podman.socket
 podman build --tag localhost/jenkins:latest /home/mwdle/Nextcloud/Server/JenkinsConfig
 systemctl --user daemon-reload
 systemctl --user start jenkins.service
