@@ -21,7 +21,8 @@ Volume=./jcasc:/var/jenkins_home/jcasc:ro
 Volume=%t/podman/podman.sock:/run/podman/podman.sock:ro
 
 ReadOnly=true
-ReadOnlyTmpfs=true
+ReadOnlyTmpfs=false
+Tmpfs=/tmp
 UserNS=keep-id
 NoNewPrivileges=true
 DropCapability=all
