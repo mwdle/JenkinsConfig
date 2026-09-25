@@ -12,20 +12,21 @@ Network=jenkins.network
 PublishPort=127.0.0.1:8080:8080
 
 EnvironmentFile=%d/environment
-Environment=CASC_JENKINS_CONFIG=/var/jenkins_home/JCasC
+Environment=CASC_JENKINS_CONFIG=/var/jenkins_home/jcasc
 Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
 Environment=DOCKER_HOST=unix:///run/podman/podman.sock
 
 Volume=%h/containers/jenkins:/var/jenkins_home
-Volume=./JCasC:/var/jenkins_home/JCasC:ro
-Volume=%t/podman/podman.sock:/run/podman/podman.sock
+Volume=./jcasc:/var/jenkins_home/jcasc:ro
+Volume=%t/podman/podman.sock:/run/podman/podman.sock:ro
 
 ReadOnly=true
 ReadOnlyTmpfs=true
 UserNS=keep-id
 NoNewPrivileges=true
 DropCapability=all
-# Required for podman socket access
+# Permit access to the rootless Podman socket
+# Socket control already grants equivalent authority within the host user's scope
 SecurityLabelDisable=true
 
 HealthCmd=["CMD-SHELL", "curl -fSs -o /dev/null http://localhost:8080/health || exit 1"]
