@@ -31,7 +31,6 @@ SecurityLabelDisable=true
 HealthCmd=["CMD-SHELL", "curl -fSs -o /dev/null http://localhost:8080/health || exit 1"]
 HealthStartupInterval=5s
 HealthStartupTimeout=5s
-HealthStartupRetries=60
 
 HealthInterval=1m
 HealthTimeout=5s
