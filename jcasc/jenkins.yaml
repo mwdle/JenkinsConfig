@@ -1,8 +1,6 @@
-# This JCasC file is tailored for the rootless Podman Quadlet configuration (`../jenkins.container`) bundled with this repository
 jenkins:
-  systemMessage: "${systemMessage}"
   noUsageStatistics: true
-  slaveAgentPort: -1 # Docker Plugin attaches directly to dynamic agent containers, thus agent port is not needed.
+  slaveAgentPort: -1
   securityRealm:
     local:
       allowsSignup: false
@@ -12,22 +10,22 @@ jenkins:
           password: "${JENKINS_ADMIN_PASSWORD}"
           properties:
             - theme:
-                theme: "darkSystem" # Requires plugin `dark-theme` - see `Dockerfile`
+                theme: "darkSystem"
 
-  authorizationStrategy: # IMPORTANT: This configuration assumes a single user instance. If this instance will have more than one user or the users are not fully trusted, this authorization strategy MUST BE REPLACED with something more secure.
+  authorizationStrategy:
     loggedInUsersCanDoAnything:
       allowAnonymousRead: false
-  disableRememberMe: false # Don't disable "Keep me signed in”
+  disableRememberMe: false
 
   crumbIssuer: "standard"
   mode: NORMAL
-  numExecutors: 0 # No executors on built-in node
+  numExecutors: 0
   quietPeriod: 0
 
   clouds:
     - docker:
         name: "podman"
-        containerCap: 100 # Default is 100, adjust as needed
+        containerCap: 100
         dockerApi:
           dockerHost:
             uri: "${DOCKER_HOST}"
@@ -37,8 +35,11 @@ jenkins:
           - connector:
               attach:
                 user: "jenkins"
+            remoteFs: "/home/jenkins"
+            labelString: "podman"
+            mode: EXCLUSIVE
             dockerTemplateBase:
-              image: "${CONTAINER_REGISTRY_HOST}/lab/jenkins-agent:latest"
+              image: "git.mwdle.com/lab/jenkins-agent:latest"
               pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
               environmentsString: |-
                 TZ=${TZ}
@@ -49,16 +50,12 @@ jenkins:
               capabilitiesToDrop:
                 - "ALL"
               cpus: "4"
-              memoryLimit: 8192
-              memorySwap: 8192
-            labelString: "podman"
-            mode: EXCLUSIVE
+              memoryLimit: 8192 # 8 GB limit
+              memorySwap: 8192 # swap disabled (equal to memory limit)
 
   globalNodeProperties:
     - envVars:
         env: # Expose shared settings to pipelines
-          - key: "CONTAINER_REGISTRY_HOST"
-            value: "${CONTAINER_REGISTRY_HOST}"
           - key: "ALERT_EMAIL"
             value: "${ALERT_EMAIL}"
 
@@ -72,12 +69,12 @@ security:
 
 unclassified:
   location:
-    url: "${JENKINS_URL}"
+    url: "https://jenkins.mwdle.com/"
     adminAddress: "${SMTP_USERNAME}"
 
   bitwarden:
     cliExecutablePath: "/usr/local/bin/bw"
-    serverUrl: "${BITWARDEN_SERVER_URL}"
+    serverUrl: "https://vault.mwdle.com"
     apiCredentialId: "bitwarden-api-key"
     masterPasswordCredentialId: "bitwarden-master-password"
     cacheDuration: 5
@@ -88,7 +85,7 @@ unclassified:
       - credentialsId: git-creds
         displayName: scm
         manageHooks: true
-        serverUrl: ${GIT_SERVER_URL}
+        serverUrl: "https://git.mwdle.com"
 
   globalLibraries:
     libraries:
@@ -98,12 +95,12 @@ unclassified:
           modernSCM:
             scm:
               gitSource:
-                remote: ${GIT_SERVER_URL}/lab/JenkinsPipelines.git # Also on Github! https://github.com/mwdle/JenkinsPipelines
+                remote: "https://git.mwdle.com/lab/JenkinsPipelines.git" # https://github.com/mwdle/JenkinsPipelines
                 traits:
                   - "gitBranchDiscovery"
 
   mailer:
-    replyToAddress: "${systemMessage} <${SMTP_USERNAME}>"
+    replyToAddress: "Jenkins <${SMTP_USERNAME}>"
     smtpHost: ${SMTP_HOST}
     smtpPort: ${SMTP_PORT}
     useSsl: true
@@ -127,6 +124,6 @@ unclassified:
         host: "172.16.0.0/16"
 
 jobs:
-  - file: /var/jenkins_home/JCasC/gitcreds.groovy
-  - file: /var/jenkins_home/JCasC/orgfolder.groovy
-  - file: /var/jenkins_home/JCasC/multibranch.groovy
+  - file: /var/jenkins_home/jcasc/gitcreds.groovy
+  - file: /var/jenkins_home/jcasc/orgfolder.groovy
+  - file: /var/jenkins_home/jcasc/dinoglue.groovy

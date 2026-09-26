@@ -15,6 +15,7 @@ EnvironmentFile=%d/environment
 Environment=CASC_JENKINS_CONFIG=/var/jenkins_home/jcasc
 Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
 Environment=DOCKER_HOST=unix:///run/podman/podman.sock
+Environment=TZ=America/Denver
 
 Volume=%h/containers/jenkins:/var/jenkins_home
 Volume=./jcasc:/var/jenkins_home/jcasc:ro
@@ -23,11 +24,11 @@ Volume=%t/podman/podman.sock:/run/podman/podman.sock:ro
 ReadOnly=true
 ReadOnlyTmpfs=false
 Tmpfs=/tmp
+
 UserNS=keep-id
 NoNewPrivileges=true
 DropCapability=all
 # Permit access to the rootless Podman socket
-# Socket control already grants equivalent authority within the host user's scope
 SecurityLabelDisable=true
 
 HealthCmd=["CMD-SHELL", "curl -fSs -o /dev/null http://localhost:8080/health || exit 1"]
@@ -48,7 +49,7 @@ Restart=always
 RestartSec=5s
 ExecStartPre=/usr/bin/mkdir -p %h/containers/jenkins
 ExecStartPre=/usr/bin/chmod 0700 %h/containers/jenkins
-LoadCredentialEncrypted=environment:JenkinsConfig.env.cred
+LoadCredentialEncrypted=environment:jenkins-config.env.cred
 
 [Install]
 WantedBy=default.target
