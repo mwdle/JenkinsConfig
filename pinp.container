@@ -1,0 +1,37 @@
+[Container]
+Image=quay.io/podman/stable:v5.8.7-immutable@sha256:f345d8d4fddea244d3a1ced27bcec82d14cc9e32cb5ead7f5882b0baf59dc8b0
+ContainerName=pinp
+
+Network=pinp.network
+
+Environment=PODMAN_USERNS=nomap
+
+Volume=pinp:/home/podman/.local/share/containers
+Volume=pinp-cache:/home/podman/.cache
+
+ReadOnly=true
+
+User=podman
+UserNS=auto:size=65536
+NoNewPrivileges=true
+DropCapability=all
+AddCapability=CAP_SETUID
+AddCapability=CAP_SETGID
+AddCapability=CAP_SYS_CHROOT
+SecurityLabelType=container_engine_t
+
+Exec=podman system service --time=0 tcp://0.0.0.0:2375
+
+HealthCmd=podman --remote --url tcp://127.0.0.1:2375 info > /dev/null || exit 1
+HealthInterval=30s
+HealthTimeout=3s
+HealthRetries=3
+HealthOnFailure=kill
+Notify=healthy
+
+[Service]
+Restart=always
+RestartSec=3s
+
+[Install]
+WantedBy=default.target

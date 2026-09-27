@@ -1,35 +1,28 @@
 # Jenkins Configuration
 
-This repository builds and configures Jenkins using JCasC. `jenkins.container` runs it as a rootless Podman Quadlet; `compose.yaml` remains temporarily during the migration.
+This repository builds and configures Jenkins using JCasC and rootless Podman Quadlets. `compose.yaml` remains temporarily during the migration.
 
-## Requirements
+Jenkins uses the Docker-compatible API provided by the isolated `pinp.container` service to provision agents. It does not access the host Podman socket. The centrally managed `jenkins.network` and `pinp.network` Quadlets from the `podman-networks` repository are required.
 
-Jenkins uses the rootless Podman socket to provision dynamic agents through the Docker-compatible API. The Quadlet starts the socket through its systemd dependency. Allow the user service manager to start at boot:
+Jenkins data is stored in `~/containers/jenkins`, while JCasC is mounted read-only from this repository. Enable lingering if the user services must start before login:
 
 ```console
 loginctl enable-linger "$USER"
 ```
 
-Socket access gives Jenkins control over every Podman resource owned by the host user. SELinux label separation is disabled only for the Jenkins controller because the standard container policy blocks access to the socket. The controller remains rootless with a read-only root filesystem, dropped capabilities, `NoNewPrivileges`, resource limits, and no socket access from agent containers.
-
-Jenkins also requires the centrally managed `jenkins.network` Quadlet from the `podman-networks` repository.
-
-Mutable Jenkins data is stored in `~/containers/jenkins`. JCasC is mounted read-only from this repository.
-
 ## Environment credential
 
-Use `.env.example` as the list of required variables. Podman does not remove quotes or expand references inside environment files, so enter final, unquoted values. Jenkins-specific derived values are composed in JCasC.
+Use `.env.example` as the list of required variables. Enter final, unquoted values because Podman environment files do not remove quotes or expand references.
 
-The complete environment is encrypted as a systemd credential named `environment` and stored as `~/.config/credstore.encrypted/jenkins-config.env.cred`.
+The complete environment is encrypted as the systemd credential `~/.config/credstore.encrypted/jenkins-config.env.cred`.
 
 ## Local workstation test
 
-Link the development repositories into Quadlet's rootless search path:
+Link the repositories into Quadlet's rootless search path:
 
 ```console
 mkdir -p /home/mwdle/.config/containers/systemd
 mkdir -p /home/mwdle/.config/credstore.encrypted
-ln -sfnT /home/mwdle/Nextcloud/Server/jenkins-config/containers.conf home/mwdle/.config/containers/containers.conf
 ln -sfnT /home/mwdle/Nextcloud/Server/jenkins-config /home/mwdle/.config/containers/systemd/jenkins-config
 ln -sfnT /home/mwdle/Nextcloud/Server/podman-networks /home/mwdle/.config/containers/systemd/podman-networks
 ```
@@ -44,25 +37,25 @@ stty echo
 
 Paste the complete environment, press Enter after its final line, and then press `Ctrl+D`. If the command is interrupted while terminal echo is disabled, run `stty echo`.
 
-Build and start Jenkins:
+Load the Quadlets and start Jenkins. Its image, PinP service, and networks start automatically through systemd dependencies:
 
 ```console
-podman build --tag localhost/jenkins:latest /home/mwdle/Nextcloud/Server/jenkins-config
 systemctl --user daemon-reload
 systemctl --user start jenkins.service
 ```
 
-Jenkins is available at <http://localhost:8080>. Check it with:
+Jenkins is available at <http://localhost:8080>.
 
 ```console
 systemctl --user status jenkins.service
 podman logs --follow jenkins
 ```
 
-After changing the image, Quadlet, JCasC, or encrypted environment, rebuild or replace the affected input and restart the service:
+After changing the Dockerfile or another image input, rebuild and restart Jenkins:
 
 ```console
-podman build --tag localhost/jenkins:latest /home/mwdle/Nextcloud/Server/jenkins-config
-systemctl --user daemon-reload
+systemctl --user restart jenkins-build.service
 systemctl --user restart jenkins.service
 ```
+
+After changing a Quadlet, JCasC, or the encrypted environment, reload systemd and restart the affected service.
