@@ -40,7 +40,7 @@ HealthOnFailure=kill
 Notify=healthy
 
 Memory=2G
-PidsLimit=1024
+PidsLimit=2048
 
 [Service]
 CPUQuota=300%
