@@ -2,12 +2,11 @@
 Image=quay.io/podman/stable:v5.8.7-immutable@sha256:f345d8d4fddea244d3a1ced27bcec82d14cc9e32cb5ead7f5882b0baf59dc8b0
 ContainerName=pinp
 
-Network=pinp.network
-
 Environment=PODMAN_USERNS=nomap
 
 Volume=pinp:/home/podman/.local/share/containers
 Volume=pinp-cache:/home/podman/.cache
+Volume=pinp-socket.volume:/run/podman:U,z
 
 ReadOnly=true
 
@@ -20,9 +19,9 @@ AddCapability=CAP_SETGID
 AddCapability=CAP_SYS_CHROOT
 SecurityLabelType=container_engine_t
 
-Exec=podman system service --time=0 tcp://0.0.0.0:2375
+Exec=podman system service --time=0 unix:///run/podman/podman.sock
 
-HealthCmd=podman --remote --url tcp://127.0.0.1:2375 info > /dev/null || exit 1
+HealthCmd=podman --remote --url unix:///run/podman/podman.sock info > /dev/null || exit 1
 HealthInterval=30s
 HealthTimeout=3s
 HealthRetries=3
@@ -32,6 +31,8 @@ Notify=healthy
 [Service]
 Restart=always
 RestartSec=3s
+# Allow the Jenkins container to connect to the PinP socket
+ExecStartPost=podman exec pinp chmod 0602 /run/podman/podman.sock
 
 [Install]
 WantedBy=default.target
