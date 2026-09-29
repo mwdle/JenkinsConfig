@@ -1,7 +1,7 @@
 bitwarden-credentials-provider:422.v4b_8597d04103
 configuration-as-code:2121.v86fe99d4b_b_a_b_
 dark-theme:652.vea_da_dfea_e769
-docker-plugin:1327.v9524f1ee134e
+docker-plugin:1331.v2c036a_dc63fc
 job-dsl:3732.v9a_c49a_61a_313
 git:5.10.1
 gitea:283.v14b_179495971
