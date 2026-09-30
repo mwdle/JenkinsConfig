@@ -4,8 +4,8 @@ ContainerName=pinp
 
 Environment=PODMAN_USERNS=nomap
 
-Volume=pinp:/home/podman/.local/share/containers
-Volume=pinp-cache:/home/podman/.cache
+Volume=/home/podman/.local/share/containers
+Volume=/home/podman/.cache
 Volume=pinp-socket.volume:/run/podman:U,z
 
 ReadOnly=true
