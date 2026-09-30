@@ -2,7 +2,7 @@
 
 This repository builds and configures Jenkins using JCasC and rootless Podman Quadlets. `compose.yaml` remains temporarily during the migration.
 
-Jenkins uses the Docker-compatible API provided through the isolated `pinp.container` Unix socket to provision agents. The dedicated `pinp-socket.volume` Quadlet declares the named volume shared only by PinP and Jenkins; Jenkins does not access the host Podman socket. The centrally managed `jenkins.network` and `pinp.network` Quadlets from the `podman-networks` repository are required.
+Jenkins uses the Docker-compatible API provided through the isolated `pinp.container` Unix socket to provision agents. The dedicated `pinp-socket.volume` Quadlet declares the named volume shared only by PinP and Jenkins; Jenkins does not access the host Podman socket. The centrally managed `jenkins.network` Quadlet from the `podman-networks` repository is required.
 
 Jenkins data is stored in `~/containers/jenkins`, while JCasC is mounted read-only from this repository. Enable lingering if the user services must start before login:
 
