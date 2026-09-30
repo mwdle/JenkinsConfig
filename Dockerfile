@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.568.3-lts-jdk25@sha256:b73f453f07fa1d403b3523a57479d2c208fda5f0e577de21c61f921022a77ee6
+FROM jenkins/jenkins:2.580.1-lts-jdk25@sha256:42fc298cdafa2683dddde9a7ccdce4058f771b1ec56c2423dbfca82f010a455f
 
 USER root
 
