@@ -14,7 +14,7 @@ PublishPort=127.0.0.1:8080:8080
 EnvironmentFile=%d/environment
 Environment=CASC_JENKINS_CONFIG=/var/jenkins_home/jcasc
 Environment=DOCKER_HOST=unix:///run/podman/podman.sock
-Environment="JAVA_OPTS=-Djenkins.install.runSetupWizard=false"
+Environment=JAVA_OPTS=-Djenkins.install.runSetupWizard=false
 Environment=TZ=America/Denver
 
 Volume=pinp-socket.volume:/run/podman:ro,z
@@ -32,16 +32,16 @@ SecurityLabelType=container_engine_t
 
 HealthStartupCmd=curl -fSs -o /dev/null http://localhost:8080/health || exit 1
 HealthStartupInterval=3s
-HealthStartupTimeout=5s
+HealthStartupTimeout=10s
 HealthCmd=curl -fSs -o /dev/null http://localhost:8080/health || exit 1
 HealthInterval=30s
-HealthTimeout=5s
+HealthTimeout=10s
 HealthRetries=3
 HealthOnFailure=kill
 Notify=healthy
 
 Memory=2G
-PidsLimit=2048
+PidsLimit=1024
 
 [Service]
 CPUQuota=300%
