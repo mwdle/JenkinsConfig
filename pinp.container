@@ -28,6 +28,8 @@ HealthRetries=3
 HealthOnFailure=kill
 Notify=healthy
 
+PidsLimit=-1
+
 [Service]
 Restart=always
 RestartSec=3s
