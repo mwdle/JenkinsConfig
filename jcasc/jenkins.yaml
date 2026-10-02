@@ -6,8 +6,8 @@ jenkins:
       allowsSignup: false
       enableCaptcha: false
       users:
-        - id: "${JENKINS_ADMIN_USER}"
-          password: "${JENKINS_ADMIN_PASSWORD}"
+        - id: "${trim:${readFile:/run/secrets/admin_username}}"
+          password: "${trim:${readFile:/run/secrets/admin_password}}"
           properties:
             - theme:
                 theme: "darkSystem"
@@ -57,7 +57,7 @@ jenkins:
     - envVars:
         env: # Expose shared settings to pipelines
           - key: "ALERT_EMAIL"
-            value: "${ALERT_EMAIL}"
+            value: "${trim:${readFile:/run/secrets/alert_email}}"
 
 security:
   contentSecurityPolicy:
@@ -70,7 +70,7 @@ security:
 unclassified:
   location:
     url: "https://jenkins.mwdle.com/"
-    adminAddress: "${SMTP_USERNAME}"
+    adminAddress: "${trim:${readFile:/run/secrets/alert_email}}"
 
   bitwarden:
     cliExecutablePath: "/usr/local/bin/bw"
@@ -100,13 +100,13 @@ unclassified:
                   - "gitBranchDiscovery"
 
   mailer:
-    replyToAddress: "Jenkins <${SMTP_USERNAME}>"
-    smtpHost: ${SMTP_HOST}
-    smtpPort: ${SMTP_PORT}
+    replyToAddress: "Jenkins <${trim:${readFile:/run/secrets/smtp_username}}>"
+    smtpHost: "heracles.mxrouting.net"
+    smtpPort: 465
     useSsl: true
     authentication:
-      username: ${SMTP_USERNAME}
-      password: ${SMTP_PASSWORD}
+      username: "${trim:${readFile:/run/secrets/smtp_username}}"
+      password: "${trim:${readFile:/run/secrets/smtp_password}}"
 
   buildDiscarders:
     configuredBuildDiscarders:
