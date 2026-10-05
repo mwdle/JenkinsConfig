@@ -121,7 +121,7 @@ unclassified:
     enabled: true
     whitelistItems:
       - hmacAlgorithm: "HmacSHA256"
-        host: "172.16.0.0/16"
+        host: "10.89.0.0/16"
 
 jobs:
   - file: /var/jenkins_home/jcasc/gitcreds.groovy
