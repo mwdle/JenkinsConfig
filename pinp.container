@@ -21,10 +21,12 @@ SecurityLabelType=container_engine_t
 
 Exec=podman system service --time=0 unix:///run/podman/podman.sock
 
+HealthStartupCmd=podman --remote --url unix:///run/podman/podman.sock info > /dev/null || exit 1
+HealthStartupInterval=5s
+HealthStartupTimeout=5s
 HealthCmd=podman --remote --url unix:///run/podman/podman.sock info > /dev/null || exit 1
 HealthInterval=30s
-HealthTimeout=3s
-HealthRetries=3
+HealthTimeout=5s
 HealthOnFailure=kill
 Notify=healthy
 

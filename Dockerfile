@@ -16,3 +16,5 @@ USER jenkins
 COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
 
 RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s CMD curl -fSs -o /dev/null http://localhost:8080/health || exit 1
