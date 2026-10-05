@@ -14,9 +14,9 @@ User=podman
 UserNS=auto:size=65536
 NoNewPrivileges=true
 DropCapability=all
-AddCapability=CAP_SETUID
-AddCapability=CAP_SETGID
-AddCapability=CAP_SYS_CHROOT
+AddCapability=SETUID
+AddCapability=SETGID
+AddCapability=SYS_CHROOT
 SecurityLabelType=container_engine_t
 
 Exec=podman system service --time=0 unix:///run/podman/podman.sock
