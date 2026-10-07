@@ -30,11 +30,11 @@ HealthTimeout=5s
 HealthOnFailure=kill
 Notify=healthy
 
-PidsLimit=-1
+PidsLimit=32768
 
 [Service]
 Restart=always
-RestartSec=3s
+RestartSec=5s
 # Allow the Jenkins container to connect to the PinP socket
 ExecStartPost=podman exec pinp chmod 0602 /run/podman/podman.sock
 
