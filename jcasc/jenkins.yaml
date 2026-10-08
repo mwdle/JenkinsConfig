@@ -49,9 +49,6 @@ jenkins:
                 - "no-new-privileges:true"
               capabilitiesToDrop:
                 - "ALL"
-              cpus: "4"
-              memoryLimit: 8192 # 8 GB limit
-              memorySwap: 8192 # swap disabled (equal to memory limit)
 
   globalNodeProperties:
     - envVars:
