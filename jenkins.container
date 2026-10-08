@@ -8,8 +8,6 @@ Pull=never
 ContainerName=jenkins
 
 Network=jenkins.network
-# TODO: remove this local test port once a reverse proxy provides access to Jenkins.
-PublishPort=127.0.0.1:8080:8080
 
 Secret=jenkins_admin_username,target=admin_username,uid=1000,gid=1000,mode=0400
 Secret=jenkins_admin_password,target=admin_password,uid=1000,gid=1000,mode=0400
