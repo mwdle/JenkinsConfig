@@ -2,6 +2,9 @@
 Image=quay.io/podman/stable:v5.8.7-immutable@sha256:f345d8d4fddea244d3a1ced27bcec82d14cc9e32cb5ead7f5882b0baf59dc8b0
 ContainerName=pinp
 
+# Reach Forgejo container registry via Caddy for Jenkins image pulls.
+Network=jenkins.network
+
 Environment=PODMAN_USERNS=nomap
 
 Volume=pinp-socket.volume:/run/podman:U,z
