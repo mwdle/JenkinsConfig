@@ -88,7 +88,6 @@ unclassified:
     libraries:
       - name: "JenkinsPipelines"
         defaultVersion: "main"
-        implicit: true
         retriever:
           modernSCM:
             scm:
