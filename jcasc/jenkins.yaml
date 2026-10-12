@@ -25,7 +25,7 @@ jenkins:
   clouds:
     - docker:
         name: "podman"
-        containerCap: 100
+        containerCap: 15
         dockerApi:
           dockerHost:
             uri: "${DOCKER_HOST}"
@@ -86,13 +86,15 @@ unclassified:
 
   globalLibraries:
     libraries:
-      - defaultVersion: "main"
-        name: "JenkinsPipelines"
+      - name: "JenkinsPipelines"
+        defaultVersion: "main"
+        implicit: true
         retriever:
           modernSCM:
             scm:
               gitSource:
                 remote: "https://git.mwdle.com/lab/JenkinsPipelines.git" # https://github.com/mwdle/JenkinsPipelines
+                credentialsId: "git-creds"
                 traits:
                   - "gitBranchDiscovery"
 
