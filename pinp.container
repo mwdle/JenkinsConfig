@@ -11,6 +11,8 @@ Volume=pinp-socket.volume:/run/podman:U,z
 Volume=/home/podman/.local/share/containers
 Volume=/home/podman/.cache
 
+AddDevice=/dev/net/tun
+
 ReadOnly=true
 
 User=podman

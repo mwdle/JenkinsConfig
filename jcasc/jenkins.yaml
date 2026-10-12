@@ -41,6 +41,7 @@ jenkins:
             dockerTemplateBase:
               image: "git.mwdle.com/lab/jenkins-agent:latest"
               pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
+              network: "pasta"
               environmentsString: |-
                 TZ=${TZ}
               mountsString: |-
