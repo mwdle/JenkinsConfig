@@ -5,11 +5,10 @@ ContainerName=pinp
 # Reach Forgejo container registry via Caddy for Jenkins image pulls.
 Network=jenkins.network
 
-Environment=PODMAN_USERNS=nomap
-
 Volume=pinp-socket.volume:/run/podman:U,z
 Volume=/home/podman/.local/share/containers
 Volume=/home/podman/.cache
+Volume=./pinp-containers.conf:/home/podman/.config/containers/containers.conf.d/pinp-containers.conf:ro,Z
 
 AddDevice=/dev/net/tun
 
