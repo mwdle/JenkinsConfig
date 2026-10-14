@@ -1,0 +1,49 @@
+[Container]
+Image=quay.io/podman/stable:v5.8.7-immutable@sha256:f345d8d4fddea244d3a1ced27bcec82d14cc9e32cb5ead7f5882b0baf59dc8b0
+ContainerName=pinp
+
+# Reach container registry via Caddy when pulling Jenkins agent images
+Network=jenkins.network
+
+Volume=pinp-socket.volume:/run/podman:U,z
+Volume=/home/podman/.local/share/containers
+Volume=/home/podman/.cache
+Volume=./pinp-containers.conf:/home/podman/.config/containers/containers.conf.d/pinp-containers.conf:ro,Z
+
+AddDevice=/dev/net/tun
+
+ReadOnly=true
+
+User=podman
+UserNS=auto:size=65536
+NoNewPrivileges=true
+DropCapability=all
+AddCapability=SETUID
+AddCapability=SETGID
+AddCapability=SYS_CHROOT
+SecurityLabelType=container_engine_t
+
+# https://github.com/podman-container-tools/podman/issues/19909
+Exec=/usr/libexec/catatonit/catatonit -- podman system service --time=0 unix:///run/podman/podman.sock
+
+HealthStartupCmd=podman --remote --url unix:///run/podman/podman.sock info > /dev/null || exit 1
+HealthStartupInterval=5s
+HealthStartupTimeout=5s
+HealthCmd=podman --remote --url unix:///run/podman/podman.sock info > /dev/null || exit 1
+HealthInterval=30s
+HealthTimeout=5s
+HealthOnFailure=kill
+Notify=healthy
+
+Memory=8G
+PidsLimit=32768
+
+[Service]
+CPUQuota=400%
+Restart=always
+RestartSec=5s
+# Allow the Jenkins container to connect to the PinP socket
+ExecStartPost=podman exec pinp chmod 0602 /run/podman/podman.sock
+
+[Install]
+WantedBy=default.target

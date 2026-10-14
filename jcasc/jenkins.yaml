@@ -1,0 +1,127 @@
+jenkins:
+  noUsageStatistics: true
+  slaveAgentPort: -1
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+        - id: "${admin_username}"
+          password: "${admin_password}"
+          properties:
+            - theme:
+                theme: "darkSystem"
+
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  disableRememberMe: false
+
+  crumbIssuer: "standard"
+  mode: NORMAL
+  numExecutors: 0
+  quietPeriod: 0
+
+  clouds:
+    - docker:
+        name: "podman"
+        containerCap: 15
+        dockerApi:
+          dockerHost:
+            uri: "${DOCKER_HOST}"
+          connectTimeout: 30
+        exposeDockerHost: false
+        templates:
+          - connector:
+              attach:
+                user: "jenkins"
+            remoteFs: "/home/jenkins"
+            labelString: "podman"
+            mode: EXCLUSIVE
+            dockerTemplateBase:
+              image: "git.mwdle.com/lab/jenkins-agent:latest"
+              pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
+              environmentsString: |-
+                TZ=${TZ}
+              mountsString: |-
+                type=volume,source=trivy-cache,destination=/home/jenkins/.cache/trivy
+              securityOpts:
+                - "no-new-privileges:true"
+              capabilitiesToDrop:
+                - "ALL"
+
+  globalNodeProperties:
+    - envVars:
+        env: # Expose shared settings to pipelines
+          - key: "ALERT_EMAIL"
+            value: "${alert_email}"
+
+security:
+  contentSecurityPolicy:
+    enforce: true
+  globalJobDslSecurityConfiguration:
+    useScriptSecurity: true
+  scriptApproval:
+    forceSandbox: true
+
+unclassified:
+  location:
+    url: "https://jenkins.mwdle.com/"
+    adminAddress: "${alert_email}"
+
+  bitwarden:
+    cliExecutablePath: "/usr/local/bin/bw"
+    serverUrl: "https://vault.mwdle.com"
+    apiCredentialId: "bitwarden-api-key"
+    masterPasswordCredentialId: "bitwarden-master-password"
+    cacheDuration: 5
+    fileCredentialSuffixes: ".env,.yaml"
+
+  giteaServers:
+    servers:
+      - credentialsId: git-creds
+        displayName: scm
+        manageHooks: true
+        serverUrl: "https://git.mwdle.com"
+
+  globalLibraries:
+    libraries:
+      - name: "JenkinsPipelines"
+        defaultVersion: "main"
+        retriever:
+          modernSCM:
+            scm:
+              gitSource:
+                remote: "https://git.mwdle.com/lab/JenkinsPipelines.git" # https://github.com/mwdle/JenkinsPipelines
+                credentialsId: "git-creds"
+                traits:
+                  - "gitBranchDiscovery"
+
+  mailer:
+    replyToAddress: "Jenkins <${smtp_username}>"
+    smtpHost: "heracles.mxrouting.net"
+    smtpPort: 465
+    useSsl: true
+    authentication:
+      username: "${smtp_username}"
+      password: "${smtp_password}"
+
+  buildDiscarders:
+    configuredBuildDiscarders:
+      - "jobBuildDiscarder"
+      - simpleBuildDiscarder:
+          discarder:
+            logRotator:
+              numToKeepStr: "100"
+              daysToKeepStr: "1095"
+
+  whitelist: # Generic Webhook Trigger
+    enabled: true
+    whitelistItems:
+      - hmacAlgorithm: "HmacSHA256"
+        host: "10.89.0.0/16"
+
+jobs:
+  - file: /var/jenkins_home/jcasc/gitcreds.groovy
+  - file: /var/jenkins_home/jcasc/orgfolder.groovy
+  - file: /var/jenkins_home/jcasc/dinoglue.groovy
