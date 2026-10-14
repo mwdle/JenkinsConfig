@@ -27,8 +27,7 @@ quadletPipeline(
         ],
         [
             type: 'string',
-            credentialsId: 'jenkins_alert_email',
-            podmanSecretStringName: 'jenkins_alert_email'
+            credentialsId: 'jenkins_alert_email'
         ]
     ]
 )
