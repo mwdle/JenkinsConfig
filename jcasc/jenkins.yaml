@@ -22,6 +22,21 @@ jenkins:
   numExecutors: 0
   quietPeriod: 0
 
+  nodes:
+    - permanent:
+        labelString: "persistent"
+        launcher:
+          inbound:
+            workDirSettings:
+              disabled: false
+              failIfWorkDirIsMissing: false
+              internalDir: "remoting"
+        mode: EXCLUSIVE
+        name: "lb"
+        numExecutors: 1
+        remoteFS: "/home/jenkins"
+        retentionStrategy: always
+
   clouds:
     - docker:
         name: "podman"

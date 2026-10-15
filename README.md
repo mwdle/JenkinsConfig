@@ -2,7 +2,7 @@
 
 This repository builds and configures Jenkins using JCasC and rootless Podman Quadlets.
 
-Jenkins provisions agents through the isolated PinP Unix socket and stores its data in `~/containers/jenkins`. The `jenkins.network` Quadlet from the `podman-networks` repository is required.
+Jenkins provisions ephemeral agents through the isolated PinP Unix socket and stores its data in `~/containers/jenkins`. A separate permanent agent handles Jenkins and PinP deployments to allow the system to self-reproduce.
 
 ```console
 loginctl enable-linger "$USER"
@@ -27,7 +27,6 @@ jenkins_alert_email
 ```console
 mkdir -p /home/mwdle/.config/containers/systemd
 ln -sfnT /home/mwdle/Nextcloud/Server/jenkins-config /home/mwdle/.config/containers/systemd/jenkins-config
-ln -sfnT /home/mwdle/Nextcloud/Server/podman-networks /home/mwdle/.config/containers/systemd/podman-networks
 systemctl --user daemon-reload
 systemctl --user start jenkins.service
 ```
