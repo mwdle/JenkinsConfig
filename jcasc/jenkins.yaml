@@ -51,7 +51,7 @@ jenkins:
               attach:
                 user: "jenkins"
             remoteFs: "/home/jenkins"
-            labelString: "podman"
+            labelString: "ephemeral"
             mode: EXCLUSIVE
             dockerTemplateBase:
               image: "git.mwdle.com/lab/jenkins-agent:latest"
@@ -60,6 +60,25 @@ jenkins:
                 TZ=${TZ}
               mountsString: |-
                 type=volume,source=trivy-cache,destination=/home/jenkins/.cache/trivy
+              securityOpts:
+                - "no-new-privileges:true"
+              capabilitiesToDrop:
+                - "ALL"
+          - connector:
+              attach:
+                user: "jenkins"
+            remoteFs: "/home/jenkins"
+            labelString: "podman"
+            mode: EXCLUSIVE
+            dockerTemplateBase:
+              image: "git.mwdle.com/lab/jenkins-agent:latest"
+              pullCredentialsId: "git-creds" # Credential ID for git server credentials -- see gitcreds seed job (`jenkins/gitcreds.groovy`)
+              environmentsString: |-
+                CONTAINER_HOST=unix:///run/podman/podman.sock
+                TZ=${TZ}
+              mountsString: |-
+                type=volume,source=trivy-cache,destination=/home/jenkins/.cache/trivy
+                type=bind,source=/run/podman/podman.sock,destination=/run/podman/podman.sock,readonly
               securityOpts:
                 - "no-new-privileges:true"
               capabilitiesToDrop:

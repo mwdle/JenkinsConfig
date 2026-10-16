@@ -2,7 +2,13 @@
 
 This repository builds and configures Jenkins using JCasC and rootless Podman Quadlets.
 
-Jenkins provisions ephemeral agents through the isolated PinP Unix socket and stores its data in `~/containers/jenkins`. A separate permanent agent handles Jenkins and PinP deployments to allow the system to self-reproduce.
+Jenkins provisions agents through the isolated PinP Unix socket and stores its data in `~/containers/jenkins`. Agent labels distinguish their capabilities:
+
+- `ephemeral` provides an isolated, disposable environment for ordinary builds.
+- `podman` additionally exposes the nested PinP socket for trusted container workloads.
+- `persistent` survives controller replacement and handles Jenkins and PinP deployments.
+
+The `podman` agent controls every container managed by PinP. Reserve it for trusted pipelines and never expose the outer host's Podman socket.
 
 ```console
 loginctl enable-linger "$USER"
