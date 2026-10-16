@@ -5,6 +5,7 @@ boolean isMainBranch = (env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
 boolean disableIndexTriggers = !isMainBranch
 
 quadletPipeline(
+    agentLabel: 'persistent',
     disableIndexTriggers: disableIndexTriggers,
     podmanSecretMappings: [
         [
