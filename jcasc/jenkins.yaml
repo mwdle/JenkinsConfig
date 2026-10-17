@@ -158,4 +158,3 @@ unclassified:
 jobs:
   - file: /var/jenkins_home/jcasc/gitcreds.groovy
   - file: /var/jenkins_home/jcasc/orgfolder.groovy
-  - file: /var/jenkins_home/jcasc/dinoglue.groovy
